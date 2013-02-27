@@ -11,4 +11,10 @@ class FunctionNode extends Node {
 		return null
 	}
 
+	def getArity() {
+		if (arity == null) {
+			arity = function.parameterTypes.size()
+		}
+		return arity
+	}
 }
