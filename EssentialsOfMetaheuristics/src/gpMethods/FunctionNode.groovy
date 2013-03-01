@@ -1,6 +1,7 @@
 package gpMethods
 
 class FunctionNode extends Node {
+	//testing!
 	def arity
 	def function
 	def children
