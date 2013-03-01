@@ -16,4 +16,9 @@ class FunctionNode extends Node {
 		}
 		return arity
 	}
+	
+	@Override
+	String toString() {
+		return "Function node. Function = $function"
+	}
 }

@@ -8,4 +8,8 @@ class ConstantNode extends Node {
 		return value
 	}
 
+	@Override
+	String toString() {
+		return "Constant node. Value = $value" 
+	}
 }

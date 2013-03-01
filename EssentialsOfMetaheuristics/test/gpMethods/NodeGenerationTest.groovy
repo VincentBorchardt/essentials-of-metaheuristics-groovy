@@ -19,28 +19,38 @@ class NodeGenerationTest extends Specification{
 	
 	def "generateConstantNode creates a constant node from the cList"(){
 		when:
-		def node1=treeGen.generateConstantNode()
+			def node1=treeGen.generateConstantNode()
 		
 		then:
-		node1.class==ConstantNode
-		cList.contains(node1.eval(varMap))
+			//System.out.println(node1)
+			node1.class==ConstantNode
+			cList.contains(node1.eval(varMap))
 	}
 	
 	def "generateVariableNode creates a variable node from the vList"(){
 		when:
-		def node2=treeGen.generateVariableNode()
+			def node2=treeGen.generateVariableNode()
 		
 		then:
-		node2.class==VariableNode
-		[6, 7, 8].contains(node2.eval(varMap))
+			//System.out.println(node2)
+			node2.class==VariableNode
+			[6, 7, 8].contains(node2.eval(varMap))
 	}
 	
 	def "generateFunctionNode creates a function node"(){
 		when:
-		def node3=treeGen.generateFunctionNode()
+			def node3=treeGen.generateFunctionNode()
 		
 		then:
-		node3.class==FunctionNode
+			node3.class==FunctionNode
+	}
+	
+	def "generateNode creates a new Node"(){
+		when:
+			def node4 = treeGen.generateNode()
+		
+		then:
+			node4.class == ConstantNode || node4.class == VariableNode || node4.class == FunctionNode
 	}
 
 }
