@@ -5,6 +5,8 @@ class TreeGenerator {
 	def variableList
 	def constantList
 	def functionList
+	def maxFunctions = 10
+	private numFunctions = 0
 	
 	def generateConstantNode(){
 		return new ConstantNode(value:(constantList[rand.nextInt(constantList.size())]))
@@ -15,6 +17,7 @@ class TreeGenerator {
 	}
 	
 	def generateFunctionNode(){
+		numFunctions++
 		def chosenFunction = functionList[rand.nextInt(functionList.size())]
 		def arity = chosenFunction.parameterTypes.size()
 		//def childrenList = new List<Node>[arity]
@@ -34,7 +37,25 @@ class TreeGenerator {
 				return generateVariableNode()
 				break;
 			case 2:
-				return generateFunctionNode()
+				if (numFunctions < maxFunctions) {
+					return generateFunctionNode()
+				} else {
+					return generateNonFunctionNode()
+				}
+				break;
+			default:
+				//NOT POSSIBRU!
+				throw new Exception("How did this happen? generateNode()")
+		}
+	}
+	
+	def generateNonFunctionNode() {
+		switch(rand.nextInt(2)) {
+			case 0:
+				return generateConstantNode()
+				break;
+			case 1:
+				return generateVariableNode()
 				break;
 			default:
 				//NOT POSSIBRU!

@@ -42,6 +42,7 @@ class NodeGenerationTest extends Specification{
 			def node3=treeGen.generateFunctionNode()
 		
 		then:
+			//System.out.println(node3)
 			node3.class==FunctionNode
 	}
 	
@@ -51,6 +52,14 @@ class NodeGenerationTest extends Specification{
 		
 		then:
 			node4.class == ConstantNode || node4.class == VariableNode || node4.class == FunctionNode
+	}
+	
+	def "generateNonFunctionNode does not create a function node"() {
+		when:
+			def node5 = treeGen.generateNonFunctionNode()
+			
+		then:
+			node5.class == ConstantNode || node5.class == VariableNode
 	}
 
 }

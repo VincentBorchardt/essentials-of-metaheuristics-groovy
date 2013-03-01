@@ -19,6 +19,7 @@ class FunctionNode extends Node {
 	
 	@Override
 	String toString() {
-		return "Function node. Function = $function"
+		//TODO maybe print what the function is (seems hard)
+		return "Function node. Arity = " + getArity()
 	}
 }
