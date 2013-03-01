@@ -5,7 +5,6 @@ class VariableNode extends Node{
 	
 	@Override
 	def eval(varMap) {
-		// TODO Auto-generated method stub
-		return null
+		return varMap.get(variable)
 	}
 }

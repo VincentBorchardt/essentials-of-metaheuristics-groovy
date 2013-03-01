@@ -5,8 +5,7 @@ class ConstantNode extends Node {
 	
 	@Override
 	def eval(varMap) {
-		// TODO Auto-generated method stub
-		return null
+		return value
 	}
 
 }
