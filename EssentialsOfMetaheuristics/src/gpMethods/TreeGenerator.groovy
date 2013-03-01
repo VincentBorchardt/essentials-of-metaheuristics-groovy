@@ -24,6 +24,9 @@ class TreeGenerator {
 		def childrenList = (0 ..< arity).collect {
             generateNode()
         }
+		
+		System.out.println(childrenList)
+		
 		return new FunctionNode(function:chosenFunction, children:childrenList)
 	}
 	

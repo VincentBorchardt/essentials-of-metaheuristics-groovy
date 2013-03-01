@@ -1,19 +1,24 @@
 package gpMethods
 
 import spock.lang.Specification
+import java.lang.Math
 
 class NodeGenerationTest extends Specification{
 	def vList
 	def cList
 	def fList
+	def fList2
 	def treeGen
+	def treeGen2
 	def varMap
 	
 	def setup(){
 		vList=["x", "y", "z"]
 		cList=[0, 1, 2, 3, 4, 5]
 		fList=[{x, y -> x + y}, {x, y -> x - y}]
+		fList2=[{x -> Math.pow(x, 2)}, {x, y -> x + y}, {x, y, z -> Math.max(Math.max(x, y), z)}]
 		treeGen=new TreeGenerator(variableList:vList, constantList:cList, functionList:fList)
+		treeGen2=new TreeGenerator(variableList:vList, constantList:cList, functionList:fList2)
 		varMap=["x":6, "y":7, "z":8]
 	}
 	
@@ -44,6 +49,17 @@ class NodeGenerationTest extends Specification{
 		then:
 			//System.out.println(node3)
 			node3.class==FunctionNode
+			//node3.eval(varMap) != null
+	}
+	
+	def "functionNodes evaluate properly"() {
+		when:
+			System.out.println("Starting functionNode evaluation test")
+			def node3=treeGen2.generateFunctionNode()
+			
+		then:
+			System.out.println(node3)
+			node3.eval(varMap) != null
 	}
 	
 	def "generateNode creates a new Node"(){

@@ -10,6 +10,6 @@ class ConstantNode extends Node {
 
 	@Override
 	String toString() {
-		return "Constant node. Value = $value" 
+		return "Constant node - value = $value" 
 	}
 }

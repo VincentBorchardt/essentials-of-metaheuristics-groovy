@@ -10,6 +10,6 @@ class VariableNode extends Node{
 	
 	@Override
 	String toString() {
-		return "Variable node. Variable = $variable"
+		return "Variable node - variable = $variable"
 	}
 }

@@ -7,7 +7,12 @@ class FunctionNode extends Node {
 
 	@Override
 	def eval(varMap) {
-		return function(children*.eval(varMap))
+		if (getArity() == 1) {
+			return function(children[0].eval(varMap))
+		} else {
+			return function(children*.eval(varMap))
+			// *. doesn't work on one thing!?!?!
+		}
 	}
 
 	def getArity() {
@@ -20,6 +25,6 @@ class FunctionNode extends Node {
 	@Override
 	String toString() {
 		//TODO maybe print what the function is (seems hard)
-		return "Function node. Arity = " + getArity()
+		return "Function node - arity = " + getArity()// + ", function = " + function.metaClass.classNode.getDeclaredMethods("doCall")[0].code.text
 	}
 }
