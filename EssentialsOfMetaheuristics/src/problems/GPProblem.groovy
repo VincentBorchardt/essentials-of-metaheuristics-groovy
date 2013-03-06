@@ -3,7 +3,7 @@ package problems
 import gpMethods.TreeGenerator
 
 class GPProblem {
-	protected rand = new java.util.Random()
+	protected Random rand = new java.util.Random()
 	Integer evalCount = 0
 	Integer maxIterations = 1000
 	Integer treeSize = 10
@@ -12,9 +12,9 @@ class GPProblem {
 	List variableList
 	TreeGenerator gen
 
-	def create = {
-		gen = new TreeGenerator(functionList: functionList, constantList: constantList, variableList: variableList, maxFunctions: treeSize)
-		return gen.generateNode()
+	def create = {maxSize = 10 ->
+		gen = new TreeGenerator(functionList:functionList, constantList:constantList, variableList:variableList, maxFunctions:treeSize)
+		return gen.generateNewTree(maxSize)
 	}
 
 	def copy = {
@@ -32,12 +32,25 @@ class GPProblem {
 	 * it alone and move on.
 	 */
 
-	def tweak = { a, mutationRate = 1 ->
-		
+	def tweak = { a, mutationRate = 0.1 ->
+		if (rand.nextFloat() < mutationRate) {
+			return gen.generateNewTree()
+		} else {
+			return tweakChildren(a, Math.sqrt(mutationRate))
+		}
+	}
+	
+	def tweakChildren = {a, mutationRate ->
+		if (a.children == null){
+			return a
+		} else {
+			a.children = a.children.collect{child -> tweak(child, mutationRate)}
+			return a
+		}
 	}
 
-	def random = {
-		
+	def random = {maxSize = 10 ->
+		return create(maxSize)
 	}
 	
 	def perturb = {

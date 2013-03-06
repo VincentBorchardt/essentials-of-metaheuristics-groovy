@@ -8,6 +8,12 @@ class TreeGenerator {
 	def maxFunctions = 10
 	private numFunctions = 0
 	
+	def generateNewTree(maxFunctions=10, constantChance = 0.2, variableChance = 0.2, functionChance = 0.6){
+		this.maxFunctions=maxFunctions
+		numFunctions=0
+		return generateNode(constantChance, variableChance, functionChance)
+	}
+	
 	def generateConstantNode(){
 		return new ConstantNode(value:(constantList[rand.nextInt(constantList.size())]))
 	}
@@ -25,7 +31,7 @@ class TreeGenerator {
             generateNode(constantChance, variableChance, functionChance)
         }
 		
-		System.out.println(childrenList)
+		//println childrenList
 		
 		return new FunctionNode(function:chosenFunction, children:childrenList)
 	}
