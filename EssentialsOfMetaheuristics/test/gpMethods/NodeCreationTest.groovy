@@ -29,4 +29,28 @@ class NodeCreationTest extends Specification {
 			vNode1.variable == "x"
 	}
 	
+	def "cloning a constant node"() {
+		when:
+			def cNode = new ConstantNode(value: 10)
+		then:
+			cNode.clone().value == 10
+	}
+	
+	def "cloning a variable node"() {
+		when:
+			def vNode = new VariableNode(variable: "x")
+		then:
+			vNode.clone().variable == "x"
+	}
+	
+	def "cloning a function node"() {
+		when:
+			def cNode1 = new ConstantNode(value:1)
+			def cNode2 = new ConstantNode(value:2)
+			def fNode = new FunctionNode(function:{x, y -> x + y}, children:[cNode1, cNode2])
+			println fNode
+		then:
+			fNode.eval() == fNode.clone().eval()
+	}
+	
 }

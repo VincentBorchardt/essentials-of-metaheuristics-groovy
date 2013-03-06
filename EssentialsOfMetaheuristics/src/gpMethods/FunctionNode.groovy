@@ -27,4 +27,8 @@ class FunctionNode extends Node {
 		//TODO maybe print what the function is (seems hard)
 		return "Function node - arity = " + getArity()// + ", function = " + function.metaClass.classNode.getDeclaredMethods("doCall")[0].code.text
 	}
+	
+	Object clone() {
+		return new FunctionNode(children: children.clone(), function: function.clone())
+	}
 }

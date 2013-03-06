@@ -16,13 +16,13 @@ class TreeGenerator {
 		return new VariableNode(variable:(variableList[rand.nextInt(variableList.size())]))
 	}
 	
-	def generateFunctionNode(){
+	def generateFunctionNode(constantChance = 0.2, variableChance = 0.2, functionChance = 0.6){
 		numFunctions++
 		def chosenFunction = functionList[rand.nextInt(functionList.size())]
 		def arity = chosenFunction.parameterTypes.size()
 		//def childrenList = new List<Node>[arity]
 		def childrenList = (0 ..< arity).collect {
-            generateNode()
+            generateNode(constantChance, variableChance, functionChance)
         }
 		
 		System.out.println(childrenList)
@@ -30,25 +30,18 @@ class TreeGenerator {
 		return new FunctionNode(function:chosenFunction, children:childrenList)
 	}
 	
-	def generateNode(){
-		//TODO let the probability distribution of node types be variable when creating a random node
-		switch(rand.nextInt(3)) {
-			case 0:
+	def generateNode(constantChance = 0.2, variableChance = 0.2, functionChance = 0.6){
+		def randFloat = rand.nextFloat()
+		if (randFloat <= constantChance) {
 				return generateConstantNode()
-				break;
-			case 1:
+		} else if (randFloat <= constantChance + variableChance) {
 				return generateVariableNode()
-				break;
-			case 2:
-				if (numFunctions < maxFunctions) {
-					return generateFunctionNode()
-				} else {
-					return generateNonFunctionNode()
-				}
-				break;
-			default:
-				//NOT POSSIBRU!
-				throw new Exception("How did this happen? generateNode()")
+		} else {
+			if (numFunctions < maxFunctions) {
+				return generateFunctionNode(constantChance, variableChance, functionChance)
+			} else {
+				return generateNonFunctionNode()
+			}
 		}
 	}
 	

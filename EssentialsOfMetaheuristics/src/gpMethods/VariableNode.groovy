@@ -12,4 +12,8 @@ class VariableNode extends Node{
 	String toString() {
 		return "Variable node - variable = $variable"
 	}
+	
+	Object clone() {
+		return new VariableNode(variable: variable)
+	}
 }

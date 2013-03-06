@@ -12,4 +12,8 @@ class ConstantNode extends Node {
 	String toString() {
 		return "Constant node - value = $value" 
 	}
+	
+	Object clone() {
+		return new ConstantNode(value: value)
+	}
 }
