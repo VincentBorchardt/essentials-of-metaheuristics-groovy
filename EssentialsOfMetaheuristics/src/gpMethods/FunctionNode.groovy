@@ -1,23 +1,25 @@
 package gpMethods
 
+import functions.Function
+
 class FunctionNode extends Node {
 	def arity
-	def function
+	Function function
 	def children
 
 	@Override
 	def eval(varMap) {
 		if (getArity() == 1) {
-			return function(children[0].eval(varMap))
+			return function.getFunction()(children[0].eval(varMap))
 		} else {
-			return function(children*.eval(varMap))
+			return function.getFunction()(children*.eval(varMap))
 			// *. doesn't work on one thing!?!?!
 		}
 	}
 
 	def getArity() {
 		if (arity == null) {
-			arity = function.parameterTypes.size()
+			arity = function.getFunction().parameterTypes.size()
 		}
 		return arity
 	}
@@ -25,7 +27,7 @@ class FunctionNode extends Node {
 	@Override
 	String toString() {
 		//TODO maybe print what the function is (seems hard)
-		return "Function node - arity = " + getArity() + " - children = " + children// + ", function = " + function.metaClass.classNode.getDeclaredMethods("doCall")[0].code.text
+		return "Function node - type = " + function.toString() + " - children = " + children
 	}
 
 	Object clone() {

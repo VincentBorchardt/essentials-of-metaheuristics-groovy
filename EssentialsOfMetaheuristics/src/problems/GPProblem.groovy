@@ -53,9 +53,11 @@ class GPProblem {
 		return create(maxSize)
 	}
 	
+	/*
 	def perturb = {
 		
 	}
+	*/
 
 	def terminate = { a, q = quality(a) ->
 		evalCount >= maxIterations || q == maximalQuality()

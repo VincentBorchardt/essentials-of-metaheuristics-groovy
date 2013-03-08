@@ -1,6 +1,7 @@
 package gpMethods
 
 import spock.lang.Specification
+import functions.Addition
 
 class NodeCreationTest extends Specification {
 	
@@ -14,10 +15,10 @@ class NodeCreationTest extends Specification {
 		when:
 			def cNode1 = new ConstantNode(value:1)
 			def cNode2 = new ConstantNode(value:2)
-			def fNode1 = new FunctionNode(function:{x, y -> x + y}, children:[cNode1, cNode2])
+			def fNode1 = new FunctionNode(function:new Addition(), children:[cNode1, cNode2])
 		then:
 			fNode1.children == [cNode1, cNode2]
-			fNode1.function(3, 6) == {x, y -> x + y}(3, 6)
+			fNode1.function.function(3, 6) == {x, y -> x + y}(3, 6)
 			fNode1.arity == 2 //initially the arity is null
 			fNode1.arity == 2 //after it is set
 	}
@@ -47,7 +48,7 @@ class NodeCreationTest extends Specification {
 		when:
 			def cNode1 = new ConstantNode(value:1)
 			def cNode2 = new ConstantNode(value:2)
-			def fNode = new FunctionNode(function:{x, y -> x + y}, children:[cNode1, cNode2])
+			def fNode = new FunctionNode(function:new Addition(), children:[cNode1, cNode2])
 			println fNode
 		then:
 			fNode.eval() == fNode.clone().eval()

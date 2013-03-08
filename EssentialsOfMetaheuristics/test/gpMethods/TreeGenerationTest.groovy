@@ -1,6 +1,7 @@
 package gpMethods
 
 import spock.lang.Specification
+import functions.*
 
 class TreeGenerationTest extends Specification{
 	def varMap
@@ -21,10 +22,10 @@ class TreeGenerationTest extends Specification{
 	
 	def "simple tree, all arity=2"(){
 		when:
-		def tree1=new FunctionNode(function:plus,
-			children:[new FunctionNode(function:minus,
+		def tree1=new FunctionNode(function:new Addition(),
+			children:[new FunctionNode(function:new Subtraction(),
 				children:[new ConstantNode(value:7), new ConstantNode(value:3)]),
-			new FunctionNode(function:times,
+			new FunctionNode(function:new Multiplication(),
 				children:[new ConstantNode(value:2), new ConstantNode(value:3)])])
 		
 		then:
@@ -33,26 +34,17 @@ class TreeGenerationTest extends Specification{
 	
 	def "super simple tree, all arity=1"(){
 		when:
-		def tree2=new FunctionNode(function:square,
+		def tree2=new FunctionNode(function:new Square(),
 			children:[new ConstantNode(value:2)])
 		
 		then:
 		tree2.eval(varMap)==4
 	}
 	
-	def "super simple tree, all arity=3"(){
-		when:
-		def tree2=new FunctionNode(function:plus2,
-			children:[new ConstantNode(value:2),new ConstantNode(value:3),new ConstantNode(value:5)])
-		
-		then:
-		tree2.eval(varMap)==10
-	}
-	
 	def "simple tree, all arity=1"(){
 		when:
-		def tree3=new FunctionNode(function:square,
-			children:[new FunctionNode(function:square,
+		def tree3=new FunctionNode(function:new Square(),
+			children:[new FunctionNode(function:new Square(),
 				children:[new ConstantNode(value:2)])])
 		
 		then:
