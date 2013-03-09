@@ -23,6 +23,10 @@ class FunctionNode extends Node {
 		}
 		return arity
 	}
+	
+	def swapChild(index, child) {
+		children[index] = child
+	}
 
 	@Override
 	String toString() {

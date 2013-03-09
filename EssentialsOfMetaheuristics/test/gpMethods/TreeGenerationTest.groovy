@@ -13,11 +13,6 @@ class TreeGenerationTest extends Specification{
 	
 	def setup(){
 		varMap=["x":4, "y":5, "z":6]
-		plus={x, y -> x + y}
-		minus={x, y -> x - y}
-		times={x, y -> x * y}
-		plus2={x, y, z -> x + y + z}
-		square={x -> x * x}
 	}
 	
 	def "simple tree, all arity=2"(){
