@@ -1,11 +1,7 @@
 package gpMethods.functions
 
-class Square extends Function{
+class Square extends Function {
 	def function = {x -> x * x}
-	def name = "Square"
-	
-	@Override
-	String toString() {
-		return name
-	}
+	def name = "^2"
+	def type = "postfix"
 }

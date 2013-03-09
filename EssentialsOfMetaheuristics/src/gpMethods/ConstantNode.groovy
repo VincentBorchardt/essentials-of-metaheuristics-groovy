@@ -10,7 +10,7 @@ class ConstantNode extends Node {
 
 	@Override
 	String toString() {
-		return "Constant node - value = $value" 
+		return "$value" 
 	}
 	
 	Object clone() {

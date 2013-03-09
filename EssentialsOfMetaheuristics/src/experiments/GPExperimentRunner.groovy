@@ -1,6 +1,6 @@
 package experiments
 
-import problems.SymbolicRegression
+import problems.GP.*;
 import singleStateMethods.HillClimber
 import populationMethods.GeneticAlgorithm
 import gpMethods.GPOnePointCrossover
@@ -10,12 +10,12 @@ import gpMethods.functions.*
 
 class GPExperimentRunner {
 
-    static runExperiment(searchers, problems, numRuns = 10) {
+    static runExperiment(searchers, problems, numRuns = 100) {
         for (p in problems) {
             for (s in searchers) {
                 for (i in 0 ..< numRuns) {
                     p.evalCount = 0
-                    def result = s.maximize(p)
+                    def result = s.maximize(p, 10000)
                     println "${s.toString()}\t${p.toString()}\t${p.quality(result)}\t${result}"
 					//println "${s.toString()}\t${p.quality(result)}"
                 }
@@ -25,15 +25,17 @@ class GPExperimentRunner {
 
     static main(args) {
 		def functionToFit = {map -> Math.sin(map."x")}
+		//def functionToFit = {map -> map."x"}
 		def variableList = ["x"]
-		def constantList = [0, 1, 2, 3, 4, 5]
-		def functionList = [new Addition(), new Multiplication(), new Subtraction(), new Division()]
+		def constantList = [1, -1, 2]
+		def functionList = [new Addition(), new Multiplication()]
 		
-		def n = 10
-		def samplePoints = (0 ..< n).collect{i -> ["x": (2 * i * Math.PI) / n]}//[["x": 0], ["x": 1]]
+		def n = 50
+		def samplePoints = (0 .. n).collect{i -> ["x": (2 * i * Math.PI) / n]}//[["x": 0], ["x": 1]]
 		
         def searchers = [
-			new GeneticAlgorithm(crossover: new GPOnePointCrossover().crossover)
+			//new GeneticAlgorithm(crossover: new GPOnePointCrossover().crossover)
+			new HillClimber()
 			
 			/*
             new HillClimber(),

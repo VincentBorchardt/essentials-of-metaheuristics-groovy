@@ -5,13 +5,16 @@ class TreeGenerator {
 	def variableList
 	def constantList
 	def functionList
-	def maxFunctions = 10
+	def maxFunctions = 5
+	def defaultConstantChance = 0.3
+	def defaultVariableChance = 0.4
+	def defaultFunctionChance = 0.3
 	private numFunctions = 0
 	
-	def generateNewTree(maxFunctions=10, constantChance = 0.2, variableChance = 0.2, functionChance = 0.6){
+	def generateNewTree(maxFunctions = this.maxFunctions, constantChance = defaultConstantChance, variableChance = defaultVariableChance, functionChance = defaultFunctionChance) {
 		//println functionList
-		this.maxFunctions=maxFunctions
-		numFunctions=0
+		this.maxFunctions = maxFunctions
+		numFunctions = 0
 		return generateNode(constantChance, variableChance, functionChance)
 	}
 	
@@ -23,7 +26,7 @@ class TreeGenerator {
 		return new VariableNode(variable:(variableList[rand.nextInt(variableList.size())]))
 	}
 	
-	def generateFunctionNode(constantChance = 0.2, variableChance = 0.2, functionChance = 0.6){
+	def generateFunctionNode(constantChance = defaultConstantChance, variableChance = defaultVariableChance, functionChance = defaultFunctionChance) {
 		numFunctions++
 		def chosenFunction = functionList[rand.nextInt(functionList.size())]
 		//println chosenFunction
@@ -38,7 +41,7 @@ class TreeGenerator {
 		return new FunctionNode(function:chosenFunction, children:childrenList)
 	}
 	
-	def generateNode(constantChance = 0.2, variableChance = 0.2, functionChance = 0.6){
+	def generateNode(constantChance = defaultConstantChance, variableChance = defaultVariableChance, functionChance = defaultFunctionChance) {
 		def randFloat = rand.nextFloat()
 		if (randFloat <= constantChance) {
 				return generateConstantNode()

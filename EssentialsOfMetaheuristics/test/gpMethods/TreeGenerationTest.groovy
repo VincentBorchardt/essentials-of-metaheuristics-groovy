@@ -5,11 +5,6 @@ import gpMethods.functions.*
 
 class TreeGenerationTest extends Specification{
 	def varMap
-	def plus
-	def plus2
-	def minus
-	def times
-	def square
 	
 	def setup(){
 		varMap=["x":4, "y":5, "z":6]

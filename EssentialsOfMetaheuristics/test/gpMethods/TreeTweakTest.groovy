@@ -1,6 +1,6 @@
 package gpMethods
 
-import problems.GPProblem
+import problems.GP.GPProblem;
 import gpMethods.ConstantNode
 import spock.lang.Specification
 import gpMethods.functions.*

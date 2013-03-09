@@ -10,7 +10,7 @@ class VariableNode extends Node{
 	
 	@Override
 	String toString() {
-		return "Variable node - variable = $variable"
+		return "$variable"
 	}
 	
 	Object clone() {

@@ -30,8 +30,19 @@ class FunctionNode extends Node {
 
 	@Override
 	String toString() {
-		//TODO maybe print what the function is (seems hard)
-		return "Function node - type = " + function.toString() + " - children = " + children
+		switch (function.type) {
+			case "prefix":
+				return function.name + "[" + children.join(", ") + "]"
+				break
+			case "infix":
+				return "(" + children.join(" " + function.name + " ") + ")"
+				break
+			case "postfix":
+				return "(" + children.join(", ") + ")" + function.name
+				break
+			default:
+				return "(" + children.join(" " + function.name + " ") + ")"
+		}
 	}
 
 	Object clone() {
