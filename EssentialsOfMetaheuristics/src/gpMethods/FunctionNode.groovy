@@ -1,6 +1,6 @@
 package gpMethods
 
-import functions.Function
+import gpMethods.functions.Function
 
 class FunctionNode extends Node {
 	def arity

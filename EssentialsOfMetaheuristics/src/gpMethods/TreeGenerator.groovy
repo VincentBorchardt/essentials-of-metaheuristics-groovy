@@ -9,6 +9,7 @@ class TreeGenerator {
 	private numFunctions = 0
 	
 	def generateNewTree(maxFunctions=10, constantChance = 0.2, variableChance = 0.2, functionChance = 0.6){
+		//println functionList
 		this.maxFunctions=maxFunctions
 		numFunctions=0
 		return generateNode(constantChance, variableChance, functionChance)
@@ -25,7 +26,8 @@ class TreeGenerator {
 	def generateFunctionNode(constantChance = 0.2, variableChance = 0.2, functionChance = 0.6){
 		numFunctions++
 		def chosenFunction = functionList[rand.nextInt(functionList.size())]
-		def arity = chosenFunction.parameterTypes.size()
+		//println chosenFunction
+		def arity = chosenFunction.function.parameterTypes.size()
 		//def childrenList = new List<Node>[arity]
 		def childrenList = (0 ..< arity).collect {
             generateNode(constantChance, variableChance, functionChance)

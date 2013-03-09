@@ -2,7 +2,7 @@ package experiments
 
 import problems.SymbolicRegression
 import singleStateMethods.HillClimber
-import gpMethods.Functions
+import gpMethods.functions.*
 //import singleStateMethods.SteepestAscentHillClimber
 //import singleStateMethods.SteepestAscentHillClimberWithReplacement
 
@@ -25,7 +25,7 @@ class GPExperimentRunner {
 		def functionToFit = {map -> Math.sin(map."x")}
 		def variableList = ["x"]
 		def constantList = [0, 1, 2, 3, 4, 5]
-		def functionList = [Functions.addition, Functions.multiplication, Functions.subtraction, Functions.division]
+		def functionList = [new Addition(), new Multiplication(), new Subtraction(), new Division()]
 		
 		def n = 10
 		def samplePoints = (0 ..< n).collect{i -> ["x": (2 * i * Math.PI) / n]}//[["x": 0], ["x": 1]]
@@ -48,7 +48,7 @@ class GPExperimentRunner {
             //			new LeadingOnesBlocks(numBits : 100, maxIterations : 10000, blockSize : 1),
             //			new LeadingOnesBlocks(numBits : 100, maxIterations : 10000, blockSize : 2),
             //			new LeadingOnesBlocks(numBits : 100, maxIterations : 10000, blockSize : 4),
-            //			new Trap(numBits : 4, maxIterations : 1000),
+            //			new Trap [Functi(numBits : 4, maxIterations : 1000),
             //			new Trap(numBits : 8, maxIterations : 1000),
             //			new Trap(numBits : 16, maxIterations : 1000),
             //new HIFF(numBits : 4, maxIterations : 1000),

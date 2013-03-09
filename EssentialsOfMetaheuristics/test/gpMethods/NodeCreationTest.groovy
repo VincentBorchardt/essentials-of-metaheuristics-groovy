@@ -1,7 +1,7 @@
 package gpMethods
 
 import spock.lang.Specification
-import functions.Addition
+import gpMethods.functions.Addition
 
 class NodeCreationTest extends Specification {
 	

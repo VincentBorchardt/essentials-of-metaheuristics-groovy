@@ -1,7 +1,7 @@
 package gpMethods
 
 import spock.lang.Specification
-import functions.*
+import gpMethods.functions.*
 
 class TreeGenerationTest extends Specification{
 	def varMap

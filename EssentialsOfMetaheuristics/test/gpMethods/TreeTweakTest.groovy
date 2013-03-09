@@ -3,6 +3,7 @@ package gpMethods
 import problems.GPProblem
 import gpMethods.ConstantNode
 import spock.lang.Specification
+import gpMethods.functions.*
 
 class TreeTweakTest extends Specification {
 	def vList
@@ -18,8 +19,8 @@ class TreeTweakTest extends Specification {
 	def setup(){
 		vList=["x", "y", "z"]
 		cList=[0, 1, 2, 3, 4, 5]
-		fList=[{x, y -> x + y}, {x, y -> x - y}]
-		fList2=[{x -> Math.pow(x, 2)}, {x, y -> x + y}, {x, y, z -> Math.max(Math.max(x, y), z)}]
+		fList=[new Addition(), new Subtraction()]
+		fList2=[new Square(), new Addition(), new Function(function: {x, y, z -> Math.max(Math.max(x, y), z)}, name: "arity 3 max")]
 		treeGen=new TreeGenerator(variableList:vList, constantList:cList, functionList:fList)
 		//treeGen2=new TreeGenerator(variableList:vList, constantList:cList, functionList:fList2)
 		problem = new GPProblem(variableList:vList, constantList:cList, functionList:fList)
@@ -47,7 +48,7 @@ class TreeTweakTest extends Specification {
 		when:
 			def cNode1 = new ConstantNode(value:1)
 			def cNode2 = new ConstantNode(value:2)
-			def fNode = new FunctionNode(function:{x, y -> x + y}, children:[cNode1, cNode2])
+			def fNode = new FunctionNode(function: new Addition(), children:[cNode1, cNode2])
 			problem.tweak(fNode, 0.5)
 		then:
 			0 == 0
