@@ -9,9 +9,12 @@ class GeneticAlgorithm {
 	
 	// We need popsize to be global so that we can use it in the toString method, also added a default value
 	def popsize = 100
+	def populationSize = popsize
+	def selector=new TournamentSelection()
+	def crossover=new Crossovers().onePointCrossover
 	
 	// Our Algorithm takes a Genetic Algorithm Problem, a desired population size
-	def maximize(problem, populationSize=popsize, selector=new TournamentSelection(), crossover=new Crossovers().onePointCrossover) {
+	def maximize(problem) {
 		popsize = populationSize
 	
 		def startingPopulation = [] as Set

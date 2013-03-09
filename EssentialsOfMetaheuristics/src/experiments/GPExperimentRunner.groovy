@@ -2,6 +2,8 @@ package experiments
 
 import problems.SymbolicRegression
 import singleStateMethods.HillClimber
+import populationMethods.GeneticAlgorithm
+import gpMethods.GPOnePointCrossover
 import gpMethods.functions.*
 //import singleStateMethods.SteepestAscentHillClimber
 //import singleStateMethods.SteepestAscentHillClimberWithReplacement
@@ -31,15 +33,19 @@ class GPExperimentRunner {
 		def samplePoints = (0 ..< n).collect{i -> ["x": (2 * i * Math.PI) / n]}//[["x": 0], ["x": 1]]
 		
         def searchers = [
-            new HillClimber()/*,
-            new SteepestAscentHillClimber(numGradientSamples : 1),
+			new GeneticAlgorithm(crossover: new GPOnePointCrossover().crossover)
+			
+			/*
+            new HillClimber(),
+			new SteepestAscentHillClimber(numGradientSamples : 1),
             new SteepestAscentHillClimber(numGradientSamples : 2),
             new SteepestAscentHillClimber(numGradientSamples : 4),
             new SteepestAscentHillClimberWithReplacement(numGradientSamples : 1),
             new SteepestAscentHillClimberWithReplacement(numGradientSamples : 2),
             new SteepestAscentHillClimberWithReplacement(numGradientSamples : 4),
             new SteepestAscentHillClimberWithReplacement(numGradientSamples : 8),
-            new SteepestAscentHillClimberWithReplacement(numGradientSamples : 16)*/
+            new SteepestAscentHillClimberWithReplacement(numGradientSamples : 16)
+            */
         ]
         def problems = [
 			new SymbolicRegression(functionToFit:functionToFit, samplePoints:samplePoints, variableList:variableList, constantList:constantList, functionList:functionList)
