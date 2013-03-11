@@ -18,21 +18,4 @@ class SymbolicRegression extends GPProblem {
 		
 		return quality
 	}
-
-	def tweak = { a, mutationRate = defaultMutationRate ->
-		if (rand.nextFloat() < mutationRate) {
-			return gen.generateNewTree()
-		} else {
-			return tweakChildren(a, mutationRate)
-		}
-	}
-	
-	def tweakChildren = {a, mutationRate ->
-		if (a.children == null){
-			return a
-		} else {
-			a.children = a.children.collect{child -> tweak(child, mutationRate)}
-			return a
-		}
-	}
 }

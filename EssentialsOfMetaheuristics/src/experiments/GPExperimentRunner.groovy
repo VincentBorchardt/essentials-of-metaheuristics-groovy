@@ -9,9 +9,10 @@ import gpMethods.functions.*
 //import singleStateMethods.SteepestAscentHillClimberWithReplacement
 
 class GPExperimentRunner {
-	static defaultMaxTreeSize = 2
+	static defaultMaxTreeSize = 5
 	static defaultNumRuns = 300
 	static defaultMaxIterations = 1000
+	static defaultNumComparisonPoints = 20
 
     static runExperiment(searchers, problems, numRuns = defaultNumRuns) {
         for (p in problems) {
@@ -30,11 +31,10 @@ class GPExperimentRunner {
 		def functionToFit = {map -> Math.sin(map."x")}
 		//def functionToFit = {map -> map."x"}
 		def variableList = ["x"]
-		def constantList = [1, -1, 2]
+		def constantList = [-1, 0.01, 0.5, 1, 2]
 		def functionList = [new Addition(), new Multiplication()]
 		
-		def n = 20
-		def samplePoints = (0 .. n).collect{i -> ["x": (2 * i * Math.PI) / n]}//[["x": 0], ["x": 1]]
+		def samplePoints = (0 .. defaultNumComparisonPoints).collect{i -> ["x": (2 * i * Math.PI) / defaultNumComparisonPoints]}//[["x": 0], ["x": 1]]
 		
         def searchers = [
 			new GeneticAlgorithm(crossover: new GPOnePointCrossover().crossover, maxDepth: defaultMaxTreeSize)

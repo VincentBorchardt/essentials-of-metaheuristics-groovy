@@ -33,6 +33,23 @@ class GPProblem {
 	}
 	*/
 
+	def tweak = { a, mutationRate = defaultMutationRate ->
+		if (rand.nextFloat() < mutationRate) {
+			return gen.generateNewTree(treeSize - a.getDepth())
+		} else {
+			return tweakChildren(a, mutationRate)
+		}
+	}
+	
+	def tweakChildren = {a, mutationRate ->
+		if (a.children == null){
+			return a
+		} else {
+			a.children = a.children.collect{child -> tweak(child, mutationRate)}
+			return a
+		}
+	}
+
 	def terminate = { a, q = quality(a) ->
 		evalCount >= maxIterations || q == maximalQuality()
 	}
