@@ -9,6 +9,8 @@ class GeneticAlgorithm {
 	
 	// We need popsize to be global so that we can use it in the toString method, also added a default value
 	def popsize = 100
+	def maxDepth = 20
+	def chance = 0.1
 	def populationSize = popsize
 	def selector=new TournamentSelection()
 	def crossover=new Crossovers().onePointCrossover
@@ -41,7 +43,7 @@ class GeneticAlgorithm {
 			for(i in 0..(popsize/2)) {
 				def parentA = selector.select(problem, startingPopulation as List)
 				def parentB = selector.select(problem, startingPopulation as List)
-				def children = crossover(parentA, parentB)
+				def children = crossover(parentA, parentB, chance, maxDepth)
 				endingPopulation.add(problem.tweak(children[0]))
 				endingPopulation.add(problem.tweak(children[1]))
 			}

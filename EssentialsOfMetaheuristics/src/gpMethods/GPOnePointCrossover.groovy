@@ -4,40 +4,45 @@ package gpMethods
 
 class GPOnePointCrossover {
 	final static Random random = new Random()
+	def defaultMaxDepth = 20
+	def defaultChance = 0.1
 	//def initialChance = 0.5
 	
-	def crossover = {parent1, parent2, chance = 0.1 ->
+	def crossover = {parent1, parent2, chance = defaultChance, maxDepth = defaultMaxDepth ->
 		def clone1 = parent1.clone()
 		def clone2 = parent2.clone()
 		
-		return crossoverHelper(clone1, clone2, chance)
+		return crossoverHelper(clone1, clone2, chance, maxDepth)
 	}
 	
-	def crossoverHelper(parent1, parent2, chance) {
+	def crossoverHelper(parent1, parent2, chance, maxDepth) {
 		if (random.nextFloat() <= chance) {
-			return [parent2, parent1]
+			return [parent2, parent1, Math.max(parent1.getDepth(), parent2.getDepth())]
 		} else {
 			def nodeToConsider1 = randomlyChooseNode(parent1)
 			def nodeToConsider2 = randomlyChooseNode(parent2)
 			
 			if (nodeToConsider1[1] == null && nodeToConsider2[1] == null) {
-				return [parent1, parent2]
+				return [parent1, parent2, Math.max(parent1.getDepth(), parent2.getDepth())]
 			} else {
-				def result = crossoverHelper(nodeToConsider1[0], nodeToConsider2[0], Math.sqrt(chance))
-				
-				if (nodeToConsider1[1] == null) { 
-					parent1 = result[0]
+				def result = crossoverHelper(nodeToConsider1[0], nodeToConsider2[0], Math.sqrt(chance), maxDepth)// We may not always want this here, but probably will
+				if (result[2] <= maxDepth) {
+					if (nodeToConsider1[1] == null) { 
+						parent1 = result[0]
+					} else {
+						parent1.children[nodeToConsider1[1]] = result[0]
+					}
+					
+					if (nodeToConsider2[1] == null) { 
+						parent2 = result[1]
+					} else {
+						parent2.children[nodeToConsider2[1]] = result[1]
+					}
+					
+					return [parent1, parent2, Math.max(parent1.getDepth(), parent2.getDepth()) + result[2]]
 				} else {
-					parent1.children[nodeToConsider1[1]] = result[0]
+					return [parent1, parent2, Math.max(parent1.getDepth(), parent2.getDepth())]
 				}
-				
-				if (nodeToConsider2[1] == null) { 
-					parent2 = result[1]
-				} else {
-					parent2.children[nodeToConsider2[1]] = result[1]
-				}
-				
-				return [parent1, parent2]
 			}
 		}
 	}

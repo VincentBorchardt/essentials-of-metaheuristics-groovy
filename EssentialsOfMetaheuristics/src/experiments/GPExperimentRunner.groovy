@@ -9,8 +9,11 @@ import gpMethods.functions.*
 //import singleStateMethods.SteepestAscentHillClimberWithReplacement
 
 class GPExperimentRunner {
+	static defaultMaxTreeSize = 2
+	static defaultNumRuns = 300
+	static defaultMaxIterations = 1000
 
-    static runExperiment(searchers, problems, numRuns = 300) {
+    static runExperiment(searchers, problems, numRuns = defaultNumRuns) {
         for (p in problems) {
             for (s in searchers) {
                 for (i in 0 ..< numRuns) {
@@ -34,7 +37,7 @@ class GPExperimentRunner {
 		def samplePoints = (0 .. n).collect{i -> ["x": (2 * i * Math.PI) / n]}//[["x": 0], ["x": 1]]
 		
         def searchers = [
-			new GeneticAlgorithm(crossover: new GPOnePointCrossover().crossover)
+			new GeneticAlgorithm(crossover: new GPOnePointCrossover().crossover, maxDepth: defaultMaxTreeSize)
 			//new HillClimber()
 			
 			/*
@@ -51,7 +54,7 @@ class GPExperimentRunner {
         ]
         def problems = [
 			new SymbolicRegression(functionToFit:functionToFit, samplePoints:samplePoints, variableList:variableList, constantList:constantList, functionList:functionList, 
-				maxIterations:1000, treeSize:15)
+				maxIterations:defaultMaxIterations, treeSize:defaultMaxTreeSize)
             //			new OnesMax(numBits : 100, maxIterations : 250),
             //			new LeadingOnes(numBits : 100, maxIterations : 1000),
             //			new LeadingOnesBlocks(numBits : 100, maxIterations : 10000, blockSize : 1),
