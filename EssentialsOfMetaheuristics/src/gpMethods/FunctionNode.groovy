@@ -27,6 +27,12 @@ class FunctionNode extends Node {
 	def swapChild(index, child) {
 		children[index] = child
 	}
+	
+	def getDepth() {
+		return 1 + 
+			children.inject(0) {a, b -> 
+				Math.max(a instanceof gpMethods.Node ?  a.getDepth() : a, b instanceof gpMethods.Node ?  b.getDepth() : b)} 
+	}
 
 	@Override
 	String toString() {

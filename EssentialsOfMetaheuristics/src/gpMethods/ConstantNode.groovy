@@ -16,4 +16,8 @@ class ConstantNode extends Node {
 	Object clone() {
 		return new ConstantNode(value: value)
 	}
+	
+	def getDepth() {
+		return 0
+	}
 }

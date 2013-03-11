@@ -10,12 +10,12 @@ import gpMethods.functions.*
 
 class GPExperimentRunner {
 
-    static runExperiment(searchers, problems, numRuns = 100) {
+    static runExperiment(searchers, problems, numRuns = 300) {
         for (p in problems) {
             for (s in searchers) {
                 for (i in 0 ..< numRuns) {
                     p.evalCount = 0
-                    def result = s.maximize(p, 10000)
+                    def result = s.maximize(p)
                     println "${s.toString()}\t${p.toString()}\t${p.quality(result)}\t${result}"
 					//println "${s.toString()}\t${p.quality(result)}"
                 }
@@ -30,12 +30,12 @@ class GPExperimentRunner {
 		def constantList = [1, -1, 2]
 		def functionList = [new Addition(), new Multiplication()]
 		
-		def n = 50
+		def n = 20
 		def samplePoints = (0 .. n).collect{i -> ["x": (2 * i * Math.PI) / n]}//[["x": 0], ["x": 1]]
 		
         def searchers = [
-			//new GeneticAlgorithm(crossover: new GPOnePointCrossover().crossover)
-			new HillClimber()
+			new GeneticAlgorithm(crossover: new GPOnePointCrossover().crossover)
+			//new HillClimber()
 			
 			/*
             new HillClimber(),
@@ -50,7 +50,8 @@ class GPExperimentRunner {
             */
         ]
         def problems = [
-			new SymbolicRegression(functionToFit:functionToFit, samplePoints:samplePoints, variableList:variableList, constantList:constantList, functionList:functionList)
+			new SymbolicRegression(functionToFit:functionToFit, samplePoints:samplePoints, variableList:variableList, constantList:constantList, functionList:functionList, 
+				maxIterations:1000, treeSize:15)
             //			new OnesMax(numBits : 100, maxIterations : 250),
             //			new LeadingOnes(numBits : 100, maxIterations : 1000),
             //			new LeadingOnesBlocks(numBits : 100, maxIterations : 10000, blockSize : 1),

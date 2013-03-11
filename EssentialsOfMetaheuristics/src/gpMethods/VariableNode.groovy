@@ -16,4 +16,8 @@ class VariableNode extends Node{
 	Object clone() {
 		return new VariableNode(variable: variable)
 	}
+	
+	def getDepth() {
+		return 0
+	}
 }

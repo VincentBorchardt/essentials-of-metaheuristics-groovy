@@ -6,8 +6,8 @@ import groovy.transform.ToString
 
 class HillClimber {		
 	// Happily this ended up being an almost direct copy from Sean's book.
-	def maximize(problem, maxIterations = 1000) {
-		def s = problem.create(maxIterations)
+	def maximize(problem) {
+		def s = problem.create()
 		def sQuality = problem.quality(s)
 		while (!problem.terminate(s, sQuality)) {
 			def r = problem.tweak(problem.copy(s))

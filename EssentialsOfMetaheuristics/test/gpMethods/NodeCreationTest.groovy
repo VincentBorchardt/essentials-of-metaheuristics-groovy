@@ -1,7 +1,7 @@
 package gpMethods
 
 import spock.lang.Specification
-import gpMethods.functions.Addition
+import gpMethods.functions.*
 
 class NodeCreationTest extends Specification {
 	
@@ -49,9 +49,44 @@ class NodeCreationTest extends Specification {
 			def cNode1 = new ConstantNode(value:1)
 			def cNode2 = new ConstantNode(value:2)
 			def fNode = new FunctionNode(function:new Addition(), children:[cNode1, cNode2])
-			println fNode
+			//println fNode
 		then:
 			fNode.eval() == fNode.clone().eval()
 	}
 	
+	def "depth test, size 1"() {
+		when:
+			def cNode1 = new ConstantNode(value:1)
+			def cNode2 = new ConstantNode(value:2)
+			def fNode = new FunctionNode(function:new Addition(), children:[cNode1, cNode2])
+		then:
+			fNode.getDepth() == 1
+	}
+	
+	def "depth test, size 2"() {
+		when:
+			def cNode1 = new ConstantNode(value:1)
+			def cNode2 = new ConstantNode(value:2)
+			def fNode = new FunctionNode(function:new Addition(),
+									   children:[new FunctionNode(function:new Subtraction(),
+											                      children:[new ConstantNode(value:7), new ConstantNode(value:3)]),
+										         new FunctionNode(function:new Multiplication(),
+											                      children:[new ConstantNode(value:2), new ConstantNode(value:3)])])
+		then:
+			fNode.getDepth() == 2
+	}
+	
+	def "depth test, unbalenced, size 3"() {
+		when:
+			def cNode1 = new ConstantNode(value:1)
+			def cNode2 = new ConstantNode(value:2)
+			def fNode = new FunctionNode(function:new Addition(),
+									     children:[new FunctionNode(function:new Subtraction(),
+											                        children:[new ConstantNode(value:7), new ConstantNode(value:3)]),
+										           new FunctionNode(function:new Multiplication(),
+											                        children:[new FunctionNode(function:new Multiplication(),
+																	  	                       children:[new ConstantNode(value:2), new ConstantNode(value:3)]), new ConstantNode(value:3)])])
+		then:
+			fNode.getDepth() == 3
+	}
 }
