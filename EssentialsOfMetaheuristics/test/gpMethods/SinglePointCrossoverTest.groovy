@@ -1,8 +1,9 @@
 package gpMethods
 
+import operators.GPOnePointCrossover;
 import spock.lang.Specification
 import gpMethods.functions.*
-import gpMethods.GPOnePointCrossover
+import gpMethods.FunctionNode
 
 class SinglePointCrossoverTest extends Specification {
 	def crossover
@@ -11,6 +12,26 @@ class SinglePointCrossoverTest extends Specification {
 	def setup() {
 		varMap=["x":4, "y":5, "z":6]
 		crossover = new GPOnePointCrossover().crossover
+	}
+	
+	def "trying to break the world"() {
+		when:
+			def fNode1 = new FunctionNode(function:new Addition(),
+						children:[new FunctionNode(function:new Subtraction(),
+							children:[new ConstantNode(value:7), new ConstantNode(value:3)]),
+						new FunctionNode(function:new Multiplication(),
+							children:[new ConstantNode(value:2), new ConstantNode(value:3)])])
+			def fNode2 = fNode1.clone()
+			100.times{
+				println "starting crossover"
+				def crossoverResults=crossover(fNode1, fNode2, 0.3)
+				println "1st Node Depth = " + fNode1.getDepth()
+				println "2nd Node Depth = " + fNode2.getDepth()
+				println "1st Node Depth after cross = " + crossoverResults[0].getDepth()
+				println "2nd Node Depth after cross = " + crossoverResults[1].getDepth()
+			}
+		then:
+			1==1
 	}
 	
 	def "crossover on two constant nodes"() {

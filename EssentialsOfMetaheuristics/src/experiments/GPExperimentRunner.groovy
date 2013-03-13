@@ -1,9 +1,9 @@
 package experiments
 
+import operators.GPOnePointCrossover;
 import problems.GP.*;
 import singleStateMethods.HillClimber
 import populationMethods.GeneticAlgorithm
-import gpMethods.GPOnePointCrossover
 import gpMethods.functions.*
 //import singleStateMethods.SteepestAscentHillClimber
 //import singleStateMethods.SteepestAscentHillClimberWithReplacement

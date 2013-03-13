@@ -1,4 +1,4 @@
-package gpMethods
+package operators
 
 
 
@@ -26,7 +26,7 @@ class GPOnePointCrossover {
 				return [parent1, parent2, Math.max(parent1.getDepth(), parent2.getDepth())]
 			} else {
 				def result = crossoverHelper(nodeToConsider1[0], nodeToConsider2[0], Math.sqrt(chance), maxDepth)// We may not always want this here, but probably will
-				if (result[2] <= maxDepth) {
+				if (Math.max(parent1.getDepth(), parent2.getDepth()) + result[2] <= maxDepth) {
 					if (nodeToConsider1[1] == null) { 
 						parent1 = result[0]
 					} else {

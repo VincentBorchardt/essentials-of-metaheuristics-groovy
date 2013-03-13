@@ -28,10 +28,23 @@ class FunctionNode extends Node {
 		children[index] = child
 	}
 	
-	def getDepth() {
-		return 1 + 
-			children.inject(0) {a, b -> 
-				Math.max(a instanceof gpMethods.Node ?  a.getDepth() : a, b instanceof gpMethods.Node ?  b.getDepth() : b)}
+	def getDepth(start=1) {
+		return getDepthHelper(start)
+	}
+	
+	def getDepthHelper(currentDepth) {
+		if(currentDepth>=100){println function.toString()}
+		def max = currentDepth
+		for (int i = 0; i < children.size; i++) {
+			if (children[i].class == FunctionNode) {
+				max = Math.max(max, children[i].getDepth(currentDepth+1))
+			}
+		}
+		//println "b "+(max + 1)
+		return max
+		//return
+		//	children.inject(0) {a, b -> 
+		//		Math.max(a instanceof gpMethods.Node ?  a.getDepthHelper(currentDepth+1) : currentDepth, b instanceof gpMethods.Node ?  b.getDepthHelper(currentDepth+1) : currentDepth)}
 	}
 
 	@Override
