@@ -13,6 +13,8 @@ class ConstantNode extends Node {
 		return "$value" 
 	}
 	
+	def containsSelf(checkingNode=this){ false }
+	
 	Object clone() {
 		return new ConstantNode(value: value)
 	}

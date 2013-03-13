@@ -89,4 +89,25 @@ class NodeCreationTest extends Specification {
 		then:
 			fNode.getDepth() == 3
 	}
+	
+	def "testing containsSelf"(){
+		when:
+		def cNode = new ConstantNode(value:1)
+		def vNode = new VariableNode(variable: "x")
+		def fNode1 = new FunctionNode(function:new Subtraction(),
+						 children:[new ConstantNode(value:7), new ConstantNode(value:3)])
+		def fNode2 = new FunctionNode(function:new Subtraction(),
+			children:[new ConstantNode(value:7), new ConstantNode(value:3)])
+		fNode2.children[1]=fNode2
+		
+		then:
+		println "starting tests"
+		cNode.containsSelf()==false
+		vNode.containsSelf()==false
+		fNode1.containsSelf()==false
+		println "starting broken node"
+		println fNode2.containsSelf()
+		println fNode2==fNode2.children[1]
+		fNode2.containsSelf()==true
+	}
 }

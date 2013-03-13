@@ -33,7 +33,9 @@ class FunctionNode extends Node {
 	}
 	
 	def getDepthHelper(currentDepth) {
-		if(currentDepth>=100){println function.toString()}
+		if(currentDepth>=100){
+			println "containsSelf check: " + this.containsSelf()
+		}
 		def max = currentDepth
 		for (int i = 0; i < children.size; i++) {
 			if (children[i].class == FunctionNode) {
@@ -45,6 +47,14 @@ class FunctionNode extends Node {
 		//return
 		//	children.inject(0) {a, b -> 
 		//		Math.max(a instanceof gpMethods.Node ?  a.getDepthHelper(currentDepth+1) : currentDepth, b instanceof gpMethods.Node ?  b.getDepthHelper(currentDepth+1) : currentDepth)}
+	}
+	
+	def containsSelf(checkingNode=this){
+		def hasSelf = false
+		for(i in children){
+			hasSelf = hasSelf || ((i == checkingNode) ? true : i.containsSelf(checkingNode))
+		}
+		return hasSelf
 	}
 
 	@Override

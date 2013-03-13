@@ -13,6 +13,8 @@ class VariableNode extends Node{
 		return "$variable"
 	}
 	
+	def containsSelf(checkingNode=this){ false }
+	
 	Object clone() {
 		return new VariableNode(variable: variable)
 	}
