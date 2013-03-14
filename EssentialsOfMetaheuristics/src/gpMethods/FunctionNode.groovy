@@ -29,7 +29,11 @@ class FunctionNode extends Node {
 	}
 	
 	def getDepth(start=1) {
-		return getDepthHelper(start)
+		if (containsSelf()) {
+			throw new Exception("node contains itself!")
+		} else {
+			return getDepthHelper(start)
+		}
 	}
 	
 	def getDepthHelper(currentDepth) {
@@ -75,6 +79,6 @@ class FunctionNode extends Node {
 	}
 
 	Object clone() {
-		return new FunctionNode(children: children.clone(), function: function.clone())
+		return new FunctionNode(children: getArity() > 1 ? children*.clone() : [children[0].clone()], function: function.clone())
 	}
 }

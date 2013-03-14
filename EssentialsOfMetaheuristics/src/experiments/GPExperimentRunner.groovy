@@ -9,7 +9,7 @@ import gpMethods.functions.*
 //import singleStateMethods.SteepestAscentHillClimberWithReplacement
 
 class GPExperimentRunner {
-	static defaultMaxTreeSize = 5
+	static defaultMaxTreeSize = 1
 	static defaultNumRuns = 300
 	static defaultMaxIterations = 1000
 	static defaultNumComparisonPoints = 20
