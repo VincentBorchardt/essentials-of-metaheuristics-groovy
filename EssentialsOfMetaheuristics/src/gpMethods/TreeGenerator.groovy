@@ -6,9 +6,9 @@ class TreeGenerator {
 	def constantList
 	def functionList
 	def maxFunctions = 5
-	def defaultConstantChance = 0.3
+	def defaultConstantChance = 0.2
 	def defaultVariableChance = 0.4
-	def defaultFunctionChance = 0.3
+	def defaultFunctionChance = 0.4
 	private numFunctions = 0
 	
 	def generateNewTree(maxFunctions = this.maxFunctions, constantChance = defaultConstantChance, variableChance = defaultVariableChance, functionChance = defaultFunctionChance) {

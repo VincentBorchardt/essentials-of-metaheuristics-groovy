@@ -12,10 +12,14 @@ class GPProblem {
 	List constantList
 	List variableList
 	TreeGenerator gen
+	def constantChance = 0.2
+	def variableChance = 0.4
+	def functionChance = 0.4
 
 	def create = { n ->
 		//this.treeSize = maxSize
-		gen = new TreeGenerator(functionList:functionList, constantList:constantList, variableList:variableList, maxFunctions:treeSize)
+		gen = new TreeGenerator(functionList:functionList, constantList:constantList, variableList:variableList, maxFunctions:treeSize,
+			defaultConstantChance:constantChance, defaultVariableChance:variableChance, defaultFunctionChance:functionChance)
 		return gen.generateNewTree()
 	}
 

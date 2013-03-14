@@ -9,10 +9,14 @@ import gpMethods.functions.*
 //import singleStateMethods.SteepestAscentHillClimberWithReplacement
 
 class GPExperimentRunner {
-	static defaultMaxTreeSize = 1
+	static defaultMaxTreeSize = 50
 	static defaultNumRuns = 300
 	static defaultMaxIterations = 1000
 	static defaultNumComparisonPoints = 20
+	static necessaryQualityMinimum = -(defaultNumComparisonPoints-0)/2
+	static constantChance = 0.2
+	static variableChance = 0.4
+	static functionChance = 0.4
 
     static runExperiment(searchers, problems, numRuns = defaultNumRuns) {
         for (p in problems) {
@@ -20,7 +24,9 @@ class GPExperimentRunner {
                 for (i in 0 ..< numRuns) {
                     p.evalCount = 0
                     def result = s.maximize(p)
-                    println "${s.toString()}\t${p.toString()}\t${p.quality(result)}\t${result}"
+					if (p.quality(result) > necessaryQualityMinimum) {
+						println "${s.toString()}\t${p.toString()}\t${p.quality(result)}\t${result}"
+					}
 					//println "${s.toString()}\t${p.quality(result)}"
                 }
             }
@@ -54,7 +60,7 @@ class GPExperimentRunner {
         ]
         def problems = [
 			new SymbolicRegression(functionToFit:functionToFit, samplePoints:samplePoints, variableList:variableList, constantList:constantList, functionList:functionList, 
-				maxIterations:defaultMaxIterations, treeSize:defaultMaxTreeSize)
+				maxIterations:defaultMaxIterations, treeSize:defaultMaxTreeSize, constantChance:constantChance, variableChance:variableChance, functionChance:functionChance)
             //			new OnesMax(numBits : 100, maxIterations : 250),
             //			new LeadingOnes(numBits : 100, maxIterations : 1000),
             //			new LeadingOnesBlocks(numBits : 100, maxIterations : 10000, blockSize : 1),
