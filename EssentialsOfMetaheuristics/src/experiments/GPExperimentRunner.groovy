@@ -17,6 +17,9 @@ class GPExperimentRunner {
 	static constantChance = 0.2
 	static variableChance = 0.4
 	static functionChance = 0.4
+	static mutationRate = 0.3
+	static minX = 0
+	static maxX = 2 * Math.PI
 
     static runExperiment(searchers, problems, numRuns = defaultNumRuns) {
         for (p in problems) {
@@ -37,10 +40,10 @@ class GPExperimentRunner {
 		def functionToFit = {map -> Math.sin(map."x")}
 		//def functionToFit = {map -> map."x"}
 		def variableList = ["x"]
-		def constantList = [-1, 0.01, 0.5, 1, 2]
+		def constantList = [-1, 0.01, 0.05, 0.1, 0.5, 1, 2, 5, 10]
 		def functionList = [new Addition(), new Multiplication()]
 		
-		def samplePoints = (0 .. defaultNumComparisonPoints).collect{i -> ["x": (2 * i * Math.PI) / defaultNumComparisonPoints]}//[["x": 0], ["x": 1]]
+		def samplePoints = (0 .. defaultNumComparisonPoints).collect{i -> ["x": minX + (i * maxX / defaultNumComparisonPoints)]}//[["x": 0], ["x": 1]]
 		
         def searchers = [
 			new GeneticAlgorithm(crossover: new GPOnePointCrossover().crossover, maxDepth: defaultMaxTreeSize)
@@ -60,7 +63,8 @@ class GPExperimentRunner {
         ]
         def problems = [
 			new SymbolicRegression(functionToFit:functionToFit, samplePoints:samplePoints, variableList:variableList, constantList:constantList, functionList:functionList, 
-				maxIterations:defaultMaxIterations, treeSize:defaultMaxTreeSize, constantChance:constantChance, variableChance:variableChance, functionChance:functionChance)
+				maxIterations:defaultMaxIterations, treeSize:defaultMaxTreeSize, constantChance:constantChance, variableChance:variableChance, functionChance:functionChance,
+				defaultMutationRate:mutationRate)
             //			new OnesMax(numBits : 100, maxIterations : 250),
             //			new LeadingOnes(numBits : 100, maxIterations : 1000),
             //			new LeadingOnesBlocks(numBits : 100, maxIterations : 10000, blockSize : 1),
