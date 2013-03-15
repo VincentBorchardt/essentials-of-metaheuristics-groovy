@@ -1,7 +1,7 @@
 package gpMethods
 
 import spock.lang.Specification
-import gpMethods.functions.*
+import gpMethods.functions.numeric.*
 import java.lang.Math
 
 class NodeGenerationTest extends Specification{

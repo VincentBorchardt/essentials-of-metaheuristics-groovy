@@ -1,4 +1,4 @@
-package gpMethods.functions
+package gpMethods
 
 class Function{
 	def function

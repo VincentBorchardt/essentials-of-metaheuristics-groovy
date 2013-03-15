@@ -2,7 +2,7 @@ package gpMethods
 
 import operators.GPOnePointCrossover;
 import spock.lang.Specification
-import gpMethods.functions.*
+import gpMethods.functions.numeric.*
 import gpMethods.FunctionNode
 
 class SinglePointCrossoverTest extends Specification {

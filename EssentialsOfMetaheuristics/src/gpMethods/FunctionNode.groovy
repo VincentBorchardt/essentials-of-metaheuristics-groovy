@@ -1,7 +1,5 @@
 package gpMethods
 
-import gpMethods.functions.Function
-
 class FunctionNode extends Node {
 	def arity
 	Function function
@@ -72,6 +70,9 @@ class FunctionNode extends Node {
 				break
 			case "postfix":
 				return "(" + children.join(", ") + ")" + function.name
+				break
+			case "if":
+				return "(if " + children[0] + " then " + children[1] + " else " + children[2] + ")"
 				break
 			default:
 				return "(" + children.join(" " + function.name + " ") + ")"

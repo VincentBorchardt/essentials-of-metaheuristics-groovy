@@ -5,6 +5,7 @@ import problems.GP.*;
 import singleStateMethods.HillClimber
 import populationMethods.GeneticAlgorithm
 import gpMethods.functions.*
+import gpMethods.functions.numeric.*
 //import singleStateMethods.SteepestAscentHillClimber
 //import singleStateMethods.SteepestAscentHillClimberWithReplacement
 

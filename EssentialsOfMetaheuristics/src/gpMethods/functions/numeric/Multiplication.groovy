@@ -1,4 +1,6 @@
-package gpMethods.functions
+package gpMethods.functions.numeric
+
+import gpMethods.Function;
 
 class Multiplication extends Function {
 	def function = {x, y -> x * y}

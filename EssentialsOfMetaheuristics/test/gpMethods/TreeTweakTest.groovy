@@ -3,7 +3,7 @@ package gpMethods
 import problems.GP.GPProblem;
 import gpMethods.ConstantNode
 import spock.lang.Specification
-import gpMethods.functions.*
+import gpMethods.functions.numeric.*
 
 class TreeTweakTest extends Specification {
 	def vList
