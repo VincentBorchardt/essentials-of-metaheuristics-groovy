@@ -11,8 +11,12 @@ class GPOnePointCrossover {
 	def crossover = {parent1, parent2, chance = defaultChance, maxDepth = defaultMaxDepth ->
 		def clone1 = parent1.clone()
 		def clone2 = parent2.clone()
+		def result = crossoverHelper(clone1, clone2, chance, maxDepth)
 		
-		return crossoverHelper(clone1, clone2, chance, maxDepth)
+		println result[0]
+		println result[1]
+		 
+		return result
 	}
 	
 	def crossoverHelper(parent1, parent2, chance, maxDepth) {

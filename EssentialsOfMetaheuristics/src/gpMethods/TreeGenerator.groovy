@@ -6,16 +6,16 @@ class TreeGenerator {
 	def constantList
 	def functionList
 	def maxFunctions = 5
-	def defaultConstantChance = 0.2
-	def defaultVariableChance = 0.4
-	def defaultFunctionChance = 0.4
+	def constantChance = 0.2
+	def variableChance = 0.4
+	def functionChance = 0.4
 	private numFunctions = 0
 	
-	def generateNewTree(maxFunctions = this.maxFunctions, constantChance = defaultConstantChance, variableChance = defaultVariableChance, functionChance = defaultFunctionChance) {
+	def generateNewTree(maxFunctions = this.maxFunctions) {
 		//println functionList
 		this.maxFunctions = maxFunctions
 		numFunctions = 0
-		return generateNode(constantChance, variableChance, functionChance)
+		return generateNode()
 	}
 	
 	def generateConstantNode(){
@@ -26,14 +26,14 @@ class TreeGenerator {
 		return new VariableNode(variable:(variableList[rand.nextInt(variableList.size())]))
 	}
 	
-	def generateFunctionNode(constantChance = defaultConstantChance, variableChance = defaultVariableChance, functionChance = defaultFunctionChance) {
+	def generateFunctionNode() {
 		numFunctions++
 		def chosenFunction = functionList[rand.nextInt(functionList.size())]
 		//println chosenFunction
 		def arity = chosenFunction.function.parameterTypes.size()
 		//def childrenList = new List<Node>[arity]
 		def childrenList = (0 ..< arity).collect {
-            generateNode(constantChance, variableChance, functionChance)
+            generateNode()
         }
 		
 		//println childrenList
@@ -41,7 +41,7 @@ class TreeGenerator {
 		return new FunctionNode(function:chosenFunction, children:childrenList)
 	}
 	
-	def generateNode(constantChance = defaultConstantChance, variableChance = defaultVariableChance, functionChance = defaultFunctionChance) {
+	def generateNode() {
 		def randFloat = rand.nextFloat()
 		if (randFloat <= constantChance) {
 				return generateConstantNode()
@@ -49,7 +49,7 @@ class TreeGenerator {
 				return generateVariableNode()
 		} else {
 			if (numFunctions < maxFunctions) {
-				return generateFunctionNode(constantChance, variableChance, functionChance)
+				return generateFunctionNode()
 			} else {
 				return generateNonFunctionNode()
 			}

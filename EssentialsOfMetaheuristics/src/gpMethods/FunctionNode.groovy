@@ -74,6 +74,9 @@ class FunctionNode extends Node {
 			case "if":
 				return "(if " + children[0] + " then " + children[1] + " else " + children[2] + ")"
 				break
+			case "not":
+				return "!" + children[0]
+				break
 			default:
 				return "(" + children.join(" " + function.name + " ") + ")"
 		}

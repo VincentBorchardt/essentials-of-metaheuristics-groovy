@@ -19,7 +19,7 @@ class GPProblem {
 	def create = { n ->
 		//this.treeSize = maxSize
 		gen = new TreeGenerator(functionList:functionList, constantList:constantList, variableList:variableList, maxFunctions:treeSize,
-			defaultConstantChance:constantChance, defaultVariableChance:variableChance, defaultFunctionChance:functionChance)
+			constantChance:constantChance, variableChance:variableChance, functionChance:functionChance)
 		return gen.generateNewTree()
 	}
 
