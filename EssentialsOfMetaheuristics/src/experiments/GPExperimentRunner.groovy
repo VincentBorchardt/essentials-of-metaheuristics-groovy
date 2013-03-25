@@ -12,7 +12,7 @@ import gpMethods.functions.numeric.*
 
 class GPExperimentRunner {
 	static defaultMaxTreeSize = 20
-	static defaultNumRuns = 100
+	static defaultNumRuns = 10
 	static defaultMaxIterations = 100
 	//static defaultNumComparisonPoints = 20
 	//static necessaryQualityMinimum = -(defaultNumComparisonPoints-0)/2

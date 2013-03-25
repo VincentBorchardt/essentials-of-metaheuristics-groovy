@@ -43,9 +43,9 @@ class TreeGenerator {
 	
 	def generateNode() {
 		def randFloat = rand.nextFloat()
-		if (randFloat <= constantChance) {
+		if (randFloat < constantChance) {
 			return generateConstantNode()
-		} else if (randFloat <= constantChance + variableChance) {
+		} else if (randFloat < constantChance + variableChance) {
 			return generateVariableNode()
 		} else {
 			if (numFunctions < maxFunctions) {
@@ -57,16 +57,12 @@ class TreeGenerator {
 	}
 	
 	def generateNonFunctionNode() {
-		switch(rand.nextInt(2)) {
-			case 0:
-				return generateConstantNode()
-				break;
-			case 1:
-				return generateVariableNode()
-				break;
-			default:
-				//NOT POSSIBRU!
-				throw new Exception("How did this happen? generateNode()")
+		//requires 0 <= functionChance < 1 
+		def randFloat = rand.nextFloat()
+		if (randFloat < constantChance / (1 - functionChance)) {
+			return generateConstantNode()
+		} else {
+			return generateVariableNode()
 		}
 	}
 }
