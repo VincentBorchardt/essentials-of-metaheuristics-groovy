@@ -11,17 +11,17 @@ import gpMethods.functions.numeric.*
 //import singleStateMethods.SteepestAscentHillClimberWithReplacement
 
 class GPExperimentRunner {
-	static defaultMaxTreeSize = 10
-	static defaultNumRuns = 10
-	static defaultMaxIterations = 10
-	static defaultNumComparisonPoints = 20
-	static necessaryQualityMinimum = -(defaultNumComparisonPoints-0)/2
+	static defaultMaxTreeSize = 20
+	static defaultNumRuns = 100
+	static defaultMaxIterations = 100
+	//static defaultNumComparisonPoints = 20
+	//static necessaryQualityMinimum = -(defaultNumComparisonPoints-0)/2
 	static constantChance = 0.0
-	static variableChance = 0.6
-	static functionChance = 0.4
+	static variableChance = 0.2
+	static functionChance = 0.8
 	static mutationRate = 0.3
-	static minX = 0
-	static maxX = 2 * Math.PI
+	//static minX = 0
+	//static maxX = 2 * Math.PI
 
     static runExperiment(searchers, problems, numRuns = defaultNumRuns) {
         for (p in problems) {
@@ -48,7 +48,7 @@ class GPExperimentRunner {
 		def constantList = [true, false]
 		def functionList = [new BoolAnd(), new BoolOr(), new BoolIf(), new BoolNot()]
 		
-		def samplePoints = (0 .. defaultNumComparisonPoints).collect{i -> ["x": minX + (i * maxX / defaultNumComparisonPoints)]}//[["x": 0], ["x": 1]]
+		//def samplePoints = (0 .. defaultNumComparisonPoints).collect{i -> ["x": minX + (i * maxX / defaultNumComparisonPoints)]}//[["x": 0], ["x": 1]]
 		
         def searchers = [
 			new GeneticAlgorithm(crossover: new GPOnePointCrossover().crossover, maxDepth: defaultMaxTreeSize)

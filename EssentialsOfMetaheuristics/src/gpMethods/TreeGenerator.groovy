@@ -44,9 +44,9 @@ class TreeGenerator {
 	def generateNode() {
 		def randFloat = rand.nextFloat()
 		if (randFloat <= constantChance) {
-				return generateConstantNode()
+			return generateConstantNode()
 		} else if (randFloat <= constantChance + variableChance) {
-				return generateVariableNode()
+			return generateVariableNode()
 		} else {
 			if (numFunctions < maxFunctions) {
 				return generateFunctionNode()
