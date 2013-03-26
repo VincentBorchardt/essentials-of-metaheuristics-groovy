@@ -27,7 +27,7 @@ class Multiplexer11Bit extends GPProblem {
 		def a0 = varMap.get("a0")
 		def a1 = varMap.get("a1")
 		def a2 = varMap.get("a2")
-		return 4*a0 + 2*a1 + a2
+		return 1*a0 + 2*a1 + 4*a2
 	}
 	
 	private numToBool(varMap) {
@@ -35,7 +35,7 @@ class Multiplexer11Bit extends GPProblem {
 		def a1 = varMap.get("a1")
 		def a2 = varMap.get("a2")
 		
-		return varMap.get("d" + (4*a0 + 2*a1 + a2))
+		return varMap.get("d" + (1*a0 + 2*a1 + 4*a2))
 	}
 	
 	private generateVarMaps() {

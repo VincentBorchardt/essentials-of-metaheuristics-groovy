@@ -13,13 +13,13 @@ import gpMethods.functions.numeric.*
 class GPExperimentRunner {
 	static defaultMaxTreeSize = 20
 	static defaultNumRuns = 10
-	static defaultMaxIterations = 100
+	static defaultMaxIterations = 500
 	//static defaultNumComparisonPoints = 20
 	//static necessaryQualityMinimum = -(defaultNumComparisonPoints-0)/2
 	static constantChance = 0.0
-	static variableChance = 0.2
-	static functionChance = 0.8
-	static mutationRate = 0.3
+	static variableChance = 0.3
+	static functionChance = 0.7
+	static mutationRate = 0.5
 	//static minX = 0
 	//static maxX = 2 * Math.PI
 
@@ -46,13 +46,13 @@ class GPExperimentRunner {
 //		def functionList = [new Addition(), new Multiplication()]
 		def variableList = ["a0", "a1", "a2", "d0", "d1", "d2", "d3", "d4", "d5", "d6", "d7"]
 		def constantList = [true, false]
-		def functionList = [new BoolAnd(), new BoolOr(), new BoolIf(), new BoolNot()]
+		def functionList = [new BoolIf()]
 		
 		//def samplePoints = (0 .. defaultNumComparisonPoints).collect{i -> ["x": minX + (i * maxX / defaultNumComparisonPoints)]}//[["x": 0], ["x": 1]]
 		
         def searchers = [
-			new GeneticAlgorithm(crossover: new GPOnePointCrossover().crossover, maxDepth: defaultMaxTreeSize)
-			//new HillClimber()
+			//new GeneticAlgorithm(crossover: new GPOnePointCrossover().crossover, maxDepth: defaultMaxTreeSize)
+			new HillClimber()
 			
 			/*
             new HillClimber(),

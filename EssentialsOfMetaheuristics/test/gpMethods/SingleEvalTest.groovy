@@ -3,7 +3,7 @@ package gpMethods
 import spock.lang.Specification
 import gpMethods.functions.numeric.*
 
-class SingleEvalTest extends Specification{
+class SingleEvalTest extends Specification {
 	def varMap1
 	
 	def setup(){
