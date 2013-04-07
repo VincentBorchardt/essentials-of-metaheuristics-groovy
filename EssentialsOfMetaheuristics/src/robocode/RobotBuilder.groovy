@@ -48,7 +48,7 @@ class RobotBuilder {
 	}
 	
 	def buildClassFile(values,isWindows=true) {
-		def javaFileName = buildJavaFile(values)
+		def javaFileName = buildJavaFile(values,isWindows)
 		def command
 		if (isWindows) {
 			def parentDir = new File(System.getProperty("user.dir"))

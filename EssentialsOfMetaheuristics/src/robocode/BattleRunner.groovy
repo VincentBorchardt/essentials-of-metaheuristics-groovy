@@ -43,31 +43,35 @@ class BattleRunner {
 			command = ["${robocodeDirWindows}\\robocode.bat", "-battle", battleFile.absolutePath]
 		} else {
 			battleFile = new File("${robotDirectory}/evolve.battle")
-			command = ["${robocodeDirLinux}/robocode.sh", "-battle", "${battleFile.absolutePath}"]
+			command = ["${robocodeDirLinux}/robocode.sh", "-battle", battleFile.absolutePath]
 		}
 		if (nodisplay) {
 			command += "-nodisplay"
 		}
-		println command
 		
 		def proc = command.execute(null, new File(robotDirectory))
-		def initialSize = 4096
-		def errStream = new ByteArrayOutputStream(initialSize)
-
-		Thread.start{
-			try {
-				 proc.in.eachLine { line ->
-					println line
-				 }
-			} catch (Exception e) {
-				e.printStackTrace()
+		def errStream
+		if (isWindows) {
+			def initialSize = 4096
+			errStream = new ByteArrayOutputStream(initialSize)
+	
+			Thread.start{
+				try {
+					 proc.in.eachLine { line ->
+						println line
+					 }
+				} catch (Exception e) {
+					e.printStackTrace()
+				}
 			}
+	
+			proc.consumeProcessErrorStream(errStream)
 		}
-
-		proc.consumeProcessErrorStream(errStream)
 		proc.waitFor()
 
-		assert errStream.size() == 0, errStream
+		if (isWindows) {
+			assert errStream.size() == 0, errStream
+		}
 
 		assert proc.exitValue() == 0, proc.err.text
 		//println proc.err.text

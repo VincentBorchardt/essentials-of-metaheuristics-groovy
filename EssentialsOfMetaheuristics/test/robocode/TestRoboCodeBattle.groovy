@@ -25,7 +25,8 @@ class TestRoboCodeBattle extends Specification {
 	def distance
 	def RobotBuilder robotBuilder
 	def BattleRunner battleRunner
-	def isWindows=true
+	def isWindows = false
+	def noDisplay = true
 
 	def setup() {
 		Random random = new Random()
@@ -36,33 +37,46 @@ class TestRoboCodeBattle extends Specification {
 		distance = random.nextFloat() * 100
 		def values = ["id" : id, "enemy_energy" : enemy_energy, "my_energy" : my_energy, "angle_diff" : angle_diff, "distance" : distance]
 
-		robotBuilder = new RobotBuilder("templates\\HawkOnFireOS.template")
+		if (isWindows) {
+			robotBuilder = new RobotBuilder("templates\\HawkOnFireOS.template")
+		} else {
+			robotBuilder = new RobotBuilder("templates/HawkOnFireOS.template")
+		}
 		robotBuilder.buildJarFile(values,isWindows)
 		
-		battleRunner = new BattleRunner("templates\\battle.template")
+		if (isWindows) {
+			battleRunner = new BattleRunner("templates\\battle.template")
+		} else {
+			battleRunner = new BattleRunner("templates/battle.template")
+		}
 	}
 	
 	def "Check that the battle file is correctly constructed"() {
 		when:
-		battleRunner.buildBattleFile(id,isWindows)
+			battleRunner.buildBattleFile(id,isWindows)
 		
 		then:
-		confirmBattleFile()
+			confirmBattleFile()
 	}
 	
 	def "Check that we can run a battle and extract the scores"() {
 		given:
-		battleRunner.buildBattleFile(id,isWindows)
+			battleRunner.buildBattleFile(id,isWindows)
 		
 		when:
-		def score = battleRunner.runBattle(id,true,isWindows)
+			def score = battleRunner.runBattle(id,noDisplay,isWindows)
 
 		then:
-		score >= 0
+			score >= 0
 	}
 	
 	def confirmBattleFile() {
-		File file = new File("evolved_robots/evolve.battle")
+		File file
+		if (isWindows) {
+			file = new File("evolved_robots\\evolve.battle")
+		} else {
+			file = new File("evolved_robots/evolve.battle")
+		}
 		def contents = file.readLines()
 		def interestingLines = contents.findAll { line ->
 			(line.indexOf("robocode.battle.selectedRobots") >= 0)
