@@ -15,6 +15,22 @@ class BattleRunner {
 	def robotDirectory = "evolved_robots"
 	def robotDirectoryAbsolute = new File(robotDirectory).absolutePath
 	def template
+	
+	static getScore(scoreText, id) {
+		def result = false
+		scoreText.each { line ->
+			def pattern = ~/evolved\.Individual_${id}\s+(\d+)/
+			def m = (line =~ pattern)
+			if (m) {
+				result = Integer.parseInt(m[0][1])
+			}
+		}
+		if (result) {
+			return result
+		} else {
+			throw new RuntimeException("Didn't find score for evolved robot")
+		}
+	}
 
 	def BattleRunner(String templateFileName) {
 		def engine = new SimpleTemplateEngine()
@@ -77,19 +93,7 @@ class BattleRunner {
 		//println proc.err.text
 		assert proc.err.text.equals("")
 		def lines = proc.in.text.split("\n")
-		def result = false
-		lines.each { line ->
-			def pattern = ~/evolved\.Individual_${id}\s+(\d+)/
-			def m = (line =~ pattern)
-			if (m) {
-				result = Integer.parseInt(m[0][1])
-			}
-		}
-		if (result) {
-			return result
-		} else {
-			throw new RuntimeException("Didn't find score for evolved robot")
-		}
+		return lines
 	}
 	
 	def linkJarFile(id, isWindows) {

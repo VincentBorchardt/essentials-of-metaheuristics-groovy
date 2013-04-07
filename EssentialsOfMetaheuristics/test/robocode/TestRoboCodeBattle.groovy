@@ -64,10 +64,10 @@ class TestRoboCodeBattle extends Specification {
 			battleRunner.buildBattleFile(id,isWindows)
 		
 		when:
-			def score = battleRunner.runBattle(id,noDisplay,isWindows)
+			def results = battleRunner.runBattle(id,noDisplay,isWindows)
 
 		then:
-			score >= 0
+			battleRunner.getScore(results, id)
 	}
 	
 	def confirmBattleFile() {

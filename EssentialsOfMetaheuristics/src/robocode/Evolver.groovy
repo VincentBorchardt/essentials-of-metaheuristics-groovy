@@ -5,6 +5,7 @@ import singleStateMethods.HillClimber
 class Evolver {
 	static numRuns = 10
 	static battleRunner
+	static isWindows = false
 
 	static runExperiment(searchers, problems) {
 		for (p in problems) {
@@ -19,12 +20,12 @@ class Evolver {
 	}
 
 	static main(args) {
-		battleRunner = new BattleRunner("templates/battle.template")
+		//battleRunner = new BattleRunner("templates/battle.template")
 		def searchers = [
 			new HillClimber()
 		]
 		def problems = [
-			new RobotEvolutionProblem()
+			new SimpleRobotEvolutionProblem(maxIterations:10)
 		]
 		// It would be nice to collect the total time here and include it in the
 		// output.
