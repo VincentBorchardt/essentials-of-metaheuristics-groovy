@@ -1,1 +1,2 @@
 HC	SimpleRobotEvolutionProblem_100	2108	[id:292303, enemy_energy:95.05974185466766, my_energy:32.16817760467529, angle_diff:4.277691841125488, distance:86.20384204387665, out:java.io.PrintWriter@1fe4d40, score:2108]
+HC	SimpleRobotEvolutionProblem_10	2123	[id:225435, enemy_energy:17.01578116416931, my_energy:67.32867121696472, angle_diff:78.87585687637329, distance:67.86371719837189, out:java.io.PrintWriter@191e4c, score:2123]

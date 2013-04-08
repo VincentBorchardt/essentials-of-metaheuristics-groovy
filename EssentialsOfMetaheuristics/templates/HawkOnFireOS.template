@@ -58,6 +58,10 @@ public class Individual_${id} extends AdvancedRobot
 	
 //- stuff -----------------------------------------------------------------------------------------------------------------------------------
 	public void doMovementAndGun() {
+	
+	getPredictedLocation(targetPosition) {
+	
+	}
 		
 		double distanceToTarget = myPos.distance(target.pos);
 		
@@ -66,7 +70,8 @@ public class Individual_${id} extends AdvancedRobot
 		if(getGunTurnRemaining() == 0 && myEnergy > 1) {
 			setFire( Math.min(Math.min(myEnergy/6d, 1300d/distanceToTarget), target.energy/3d) );
 		}
-		
+		//Point2D.Double = newTarget=new Point2D.Double((${target_x})*target.pos.x,(${target_y})*target.pos.y)
+		//setTurnGunRightRadians(Utils.normalRelativeAngle(calcAngle(newTarget, myPos) - getGunHeadingRadians()));
 		setTurnGunRightRadians(Utils.normalRelativeAngle(calcAngle(target.pos, myPos) - getGunHeadingRadians()));
 		
 	//**** move *****************//

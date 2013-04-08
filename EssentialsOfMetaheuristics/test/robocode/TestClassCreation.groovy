@@ -19,6 +19,7 @@ class TestClassCreation extends Specification {
     def angle_diff
     def distance
     def robotBuilder
+	def isWindows = false
 
     def setup() {
         Random random = new Random()
@@ -40,7 +41,7 @@ class TestClassCreation extends Specification {
         def values = ["id" : id, "enemy_energy" : enemy_energy, "my_energy" : my_energy, "angle_diff" : angle_diff, "distance" : distance]
 
         when:
-        robotBuilder.buildJavaFile(values)
+        robotBuilder.buildJavaFile(values, isWindows)
 
         then:
         confirmJavaFileExists()
@@ -59,7 +60,7 @@ class TestClassCreation extends Specification {
         def values = ["id" : id, "enemy_energy" : enemy_energy, "my_energy" : my_energy, "angle_diff" : angle_diff, "distance" : distance]
 
         when:
-        robotBuilder.buildClassFile(values)
+        robotBuilder.buildClassFile(values, isWindows)
 
         then:
         confirmJavaFileExists()
@@ -80,7 +81,7 @@ class TestClassCreation extends Specification {
         def values = ["id" : id, "enemy_energy" : enemy_energy, "my_energy" : my_energy, "angle_diff" : angle_diff, "distance" : distance]
 
         when:
-        robotBuilder.buildJarFile(values)
+        robotBuilder.buildJarFile(values, isWindows)
 
         then:
         confirmJavaFileExists()
@@ -94,7 +95,12 @@ class TestClassCreation extends Specification {
     }
 
     def confirmJavaFileExists() {
-        File file = new File("evolved_robots/evolved/Individual_${id}.java")
+        File file
+		if (isWindows) {
+			file = new File("evolved_robots\\evolved\\Individual_${id}.java")
+		} else {
+			file = new File("evolved_robots/evolved/Individual_${id}.java")
+		}
         def contents = file.readLines()
         def interestingLines = contents.findAll { line ->
             (line.indexOf("public class") >= 0) || (line.indexOf("eval += ") >= 0)
@@ -110,33 +116,64 @@ class TestClassCreation extends Specification {
     }
 
     def confirmClassFileExists() {
-        File file = new File("evolved_robots/evolved/Individual_${id}.class")
+		File file
+		if (isWindows) {
+			file = new File("evolved_robots\\evolved\\Individual_${id}.class")
+		} else {
+			file = new File("evolved_robots/evolved/Individual_${id}.class")
+		}
         assert file.exists()
         return true
     }
     
     def confirmJarFileExists() {
-        File file = new File("evolved_robots/Individual_${id}.jar")
+		File file
+		def targets
+		if (isWindows) {
+			file = new File("evolved_robots\\Individual_${id}.jar")
+		} else {
+			file = new File("evolved_robots/Individual_${id}.jar")
+		}
         assert file.exists()
         def entryNames = new JarFile(file).entries().collect { it.name }
-        def targets = ["evolved/Individual_${id}.class", 
+		if (isWindows) {
+			targets = ["evolved\\Individual_${id}.class", 
+            "evolved\\Individual${id}\$MicroEnemy.class", 
+            "evolved\\Individual_${id}.java",
+            "evolved\\Individual_${id}.properties"]
+		} else {
+			targets = ["evolved/Individual_${id}.class", 
             "evolved/Individual${id}\$MicroEnemy.class", 
             "evolved/Individual_${id}.java",
             "evolved/Individual_${id}.properties"]
+		}
         entryNames.containsAll(targets)
         return true
     }
     
     def removeJavaFile() {
-        new File("evolved_robots/evolved/Individual_${id}.java").delete()
+		if (isWindows) {
+			new File("evolved_robots\\evolved\\Individual_${id}.java").delete()
+		} else {
+			new File("evolved_robots/evolved/Individual_${id}.java").delete()
+		}
     }
 
     def removeClassFile() {
-        new File("evolved_robots/evolved/Individual_${id}.class").delete()
-        new File("evolved_robots/evolved/Individual_${id}\$MicroEnemy.class").delete()
+		if (isWindows) {
+	        new File("evolved_robots\\evolved\\Individual_${id}.class").delete()
+	        new File("evolved_robots\\evolved\\Individual_${id}\$MicroEnemy.class").delete()
+		} else {
+	        new File("evolved_robots/evolved/Individual_${id}.class").delete()
+	        new File("evolved_robots/evolved/Individual_${id}\$MicroEnemy.class").delete()
+		}
     }
     
     def removePropertiesFile() {
-        new File("evolved_robots/evolved/Individual_${id}.properties").delete()
+		if (isWindows) {
+			new File("evolved_robots\\evolved\\Individual_${id}.properties").delete()
+		} else {
+        	new File("evolved_robots/evolved/Individual_${id}.properties").delete()
+		}
     }
 }

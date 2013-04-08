@@ -27,15 +27,15 @@ class RunBattle {
 	}
 	
 	static getScore(scoreText, id) {
-		def result = false
+		def result = "missing"
+		def pattern = ~/evolved\.Individual_${id}\s+(\d+)/
 		scoreText.each { line ->
-			def pattern = ~/evolved\.Individual_${id}\s+(\d+)/
 			def m = (line =~ pattern)
 			if (m) {
 				result = Integer.parseInt(m[0][1])
 			}
 		}
-		if (result) {
+		if (result != "missing") {
 			return result
 		} else {
 			throw new RuntimeException("Didn't find score for evolved robot")

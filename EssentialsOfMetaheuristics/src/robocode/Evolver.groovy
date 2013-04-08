@@ -3,7 +3,7 @@ package robocode
 import singleStateMethods.HillClimber
 
 class Evolver {
-	static numRuns = 10
+	static numRuns = 2
 	static battleRunner
 	static isWindows = false
 
