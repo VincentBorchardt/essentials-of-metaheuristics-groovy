@@ -1,9 +1,13 @@
 package robocode
 
+import populationMethods.MuCommaLambdaES
+import populationMethods.MuPlusLambdaES
 import singleStateMethods.HillClimber
+import singleStateMethods.IteratedLocalSearchRandomRestarts
 
 class Evolver {
-	static numRuns = 2
+	static numRuns = 1
+	static numIterations = 300
 	static battleRunner
 	static isWindows = false
 
@@ -22,10 +26,12 @@ class Evolver {
 	static main(args) {
 		//battleRunner = new BattleRunner("templates/battle.template")
 		def searchers = [
-			new HillClimber()
+			new IteratedLocalSearchRandomRestarts()
+			//new HillClimber()
+			//new MuPlusLambdaES()
 		]
 		def problems = [
-			new SimpleRobotEvolutionProblem(maxIterations:10)
+			new SimpleRobotEvolutionProblem(maxIterations:numIterations)
 		]
 		// It would be nice to collect the total time here and include it in the
 		// output.

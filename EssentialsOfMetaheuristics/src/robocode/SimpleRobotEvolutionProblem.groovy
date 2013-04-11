@@ -29,7 +29,9 @@ class SimpleRobotEvolutionProblem {
 		def my_energy = rand.nextFloat() * 100
 		def angle_diff = rand.nextFloat() * 100
 		def distance = rand.nextFloat() * 100
-		def values = ["id" : id, "enemy_energy" : enemy_energy, "my_energy" : my_energy, "angle_diff" : angle_diff, "distance" : distance]
+		def movementPerturbation = (2*rand.nextFloat()-1) * Math.PI / 2
+		def values = ["id" : id, "enemy_energy" : enemy_energy, "my_energy" : my_energy, "angle_diff" : angle_diff, 
+			"distance" : distance, "movementPerturbation": movementPerturbation]
 //		def robotBuilder = new RobotBuilder("templates/HawkOnFireOS.template")
 //		robotBuilder.buildJarFile(values)
 //		new File("evolved_robots/evolved/Individual_${id}.java")
@@ -55,7 +57,9 @@ class SimpleRobotEvolutionProblem {
 		def new_my_energy = a.get("my_energy")+(rand.nextFloat()*2-1)*mutationRate
 		def new_angle_diff = a.get("angle_diff")+(rand.nextFloat()*2-1)*mutationRate
 		def new_distance = a.get("distance")+(rand.nextFloat()*2-1)*mutationRate
-		def new_values = ["id" : new_id, "enemy_energy" : new_enemy_energy, "my_energy" : new_my_energy, "angle_diff" : new_angle_diff, "distance" : new_distance]
+		def new_movementPerturbation = a.get("movementPerturbation") + (2*rand.nextFloat()-1)*(Math.PI/4)*mutationRate
+		def new_values = ["id" : new_id, "enemy_energy" : new_enemy_energy, "my_energy" : new_my_energy, "angle_diff" : new_angle_diff,
+			"distance" : new_distance, "movementPerturbation": new_movementPerturbation]
 		return new_values
 	}
 

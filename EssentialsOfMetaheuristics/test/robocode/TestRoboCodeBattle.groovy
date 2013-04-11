@@ -26,7 +26,8 @@ class TestRoboCodeBattle extends Specification {
 	def RobotBuilder robotBuilder
 	def BattleRunner battleRunner
 	def isWindows = false
-	def noDisplay = true
+	def noDisplay = false
+	def movementPerturbation
 
 	def setup() {
 		Random random = new Random()
@@ -35,7 +36,9 @@ class TestRoboCodeBattle extends Specification {
 		my_energy = random.nextFloat() * 100
 		angle_diff = random.nextFloat() * 100
 		distance = random.nextFloat() * 100
-		def values = ["id" : id, "enemy_energy" : enemy_energy, "my_energy" : my_energy, "angle_diff" : angle_diff, "distance" : distance]
+		movementPerturbation = (2*random.nextFloat()-1) * Math.PI / 2
+		def values = ["id" : id, "enemy_energy" : enemy_energy, "my_energy" : my_energy, "angle_diff" : angle_diff, 
+			"distance" : distance, "movementPerturbation": movementPerturbation]
 
 		if (isWindows) {
 			robotBuilder = new RobotBuilder("templates\\HawkOnFireOS.template")

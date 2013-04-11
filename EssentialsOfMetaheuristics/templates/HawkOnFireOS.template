@@ -58,21 +58,16 @@ public class Individual_${id} extends AdvancedRobot
 	
 //- stuff -----------------------------------------------------------------------------------------------------------------------------------
 	public void doMovementAndGun() {
-	
-	getPredictedLocation(targetPosition) {
-	
-	}
-		
 		double distanceToTarget = myPos.distance(target.pos);
 		
 	//**** gun ******************//
 		// HeadOnTargeting there's nothing I can say about this
 		if(getGunTurnRemaining() == 0 && myEnergy > 1) {
-			setFire( Math.min(Math.min(myEnergy/6d, 1300d/distanceToTarget), target.energy/3d) );
+			setFire(Math.min(Math.min(myEnergy/6d, 1300d/distanceToTarget), target.energy/3d) );
 		}
-		//Point2D.Double = newTarget=new Point2D.Double((${target_x})*target.pos.x,(${target_y})*target.pos.y)
-		//setTurnGunRightRadians(Utils.normalRelativeAngle(calcAngle(newTarget, myPos) - getGunHeadingRadians()));
-		setTurnGunRightRadians(Utils.normalRelativeAngle(calcAngle(target.pos, myPos) - getGunHeadingRadians()));
+		
+		Point2D.Double newTarget = new Point2D.Double(target.pos.x, target.pos.y);
+		setTurnGunRightRadians(Utils.normalRelativeAngle(calcAngle(newTarget, myPos) - getGunHeadingRadians()));
 		
 	//**** move *****************//
 		double distanceToNextDestination = myPos.distance(nextDestination);
@@ -104,12 +99,14 @@ public class Individual_${id} extends AdvancedRobot
 			
 		// just the normal goTo stuff
 			double angle = calcAngle(nextDestination, myPos) - getHeadingRadians();
+			angle += ${movementPerturbation};
 			double direction = 1;
 			
 			if(Math.cos(angle) < 0) {
 				angle += Math.PI;
 				direction = -1;
-			}
+			} 
+			
 			
 			setAhead(distanceToNextDestination * direction);
 			setTurnRightRadians(angle = Utils.normalRelativeAngle(angle));

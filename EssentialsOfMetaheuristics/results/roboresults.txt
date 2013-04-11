@@ -1,2 +1,4 @@
 HC	SimpleRobotEvolutionProblem_100	2108	[id:292303, enemy_energy:95.05974185466766, my_energy:32.16817760467529, angle_diff:4.277691841125488, distance:86.20384204387665, out:java.io.PrintWriter@1fe4d40, score:2108]
 HC	SimpleRobotEvolutionProblem_10	2123	[id:225435, enemy_energy:17.01578116416931, my_energy:67.32867121696472, angle_diff:78.87585687637329, distance:67.86371719837189, out:java.io.PrintWriter@191e4c, score:2123]
+MuPlusLambdaES_2_6	SimpleRobotEvolutionProblem_100	2096	[id:740145, enemy_energy:66.89402461051941, my_energy:2.2328197956085205, angle_diff:16.57269597053528, distance:46.431249380111694, movementPerturbation:0.21856679579577998, out:java.io.PrintWriter@80f252, score:2096]
+ILS-RR	SimpleRobotEvolutionProblem_200	2095	[id:952548, enemy_energy:48.198243498802185, my_energy:48.86483132839203, angle_diff:26.96069061756134, distance:51.618168354034424, movementPerturbation:-0.007468325531449854, out:java.io.PrintWriter@7dac02, score:2095]
