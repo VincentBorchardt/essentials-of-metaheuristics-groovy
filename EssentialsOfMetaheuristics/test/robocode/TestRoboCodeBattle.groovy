@@ -32,11 +32,12 @@ class TestRoboCodeBattle extends Specification {
 	def setup() {
 		Random random = new Random()
 		id = random.nextInt(1000000)
-		enemy_energy = random.nextFloat() * 100
-		my_energy = random.nextFloat() * 100
-		angle_diff = random.nextFloat() * 100
-		distance = random.nextFloat() * 100
-		movementPerturbation = (2*random.nextFloat()-1) * Math.PI / 2
+		println id
+		enemy_energy = 17//random.nextFloat() * 100
+		my_energy = 67//random.nextFloat() * 100
+		angle_diff = 79//random.nextFloat() * 100
+		distance = 68//random.nextFloat() * 100
+		movementPerturbation = 0 //(2 * random.nextFloat()-1) * Math.PI / 8
 		def values = ["id" : id, "enemy_energy" : enemy_energy, "my_energy" : my_energy, "angle_diff" : angle_diff, 
 			"distance" : distance, "movementPerturbation": movementPerturbation]
 

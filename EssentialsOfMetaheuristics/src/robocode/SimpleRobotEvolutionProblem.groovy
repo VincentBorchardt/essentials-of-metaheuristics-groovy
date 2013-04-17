@@ -27,9 +27,9 @@ class SimpleRobotEvolutionProblem {
 		def id = rand.nextInt(1000000)
 		def enemy_energy = rand.nextFloat() * 100
 		def my_energy = rand.nextFloat() * 100
-		def angle_diff = rand.nextFloat() * 100
+		def angle_diff = rand.nextFloat() * 10
 		def distance = rand.nextFloat() * 100
-		def movementPerturbation = (2*rand.nextFloat()-1) * Math.PI / 2
+		def movementPerturbation = 0//(2*rand.nextFloat()-1) * Math.PI / 8
 		def values = ["id" : id, "enemy_energy" : enemy_energy, "my_energy" : my_energy, "angle_diff" : angle_diff, 
 			"distance" : distance, "movementPerturbation": movementPerturbation]
 //		def robotBuilder = new RobotBuilder("templates/HawkOnFireOS.template")

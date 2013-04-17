@@ -63,8 +63,8 @@ public class Individual_${id} extends AdvancedRobot
 	//**** gun ******************//
 		// HeadOnTargeting there's nothing I can say about this
 		if(getGunTurnRemaining() == 0 && myEnergy > 1) {
-			setFire(Math.min(Math.min(myEnergy/6d, 1300d/distanceToTarget), target.energy/3d) );
-			//setFire(2);
+			//setFire(Math.min(Math.min(myEnergy/6d, 1300d/distanceToTarget), target.energy/3d) );
+			setFire(2);
 		}
 		
 		Point2D.Double newTarget = new Point2D.Double(target.pos.x, target.pos.y);
@@ -149,19 +149,11 @@ public class Individual_${id} extends AdvancedRobot
 		double correction;
 		
 		xT = e.getDistance();
-		bT = e.getBearingRadians();
-		vT = e.getVelocity();
-		vB = 16;
-		
-		/*
-		
-	static Point2D.Double nextDestination;
-	static Point2D.Double lastPosition;
-		*/
+		bT = e.getHeadingRadians();
+		vT = e.getRobotVelocity();
+		vB = 20 - 3 * 2;
 
-		correction = Math.acos((xT * (vB * vB * xT - vT * vT * xT * Math.sin(bT)* Math.sin(bT) - vT * Math.cos(bT) * Math.sqrt(xT * xT * (vB * vB - vT * vT * Math.sin(bT) * Math.sin(bT)))))
-		 / ((vB * vB - vT * vT) * xT * Math.sqrt((Math.pow(vB, 4) * xT * xT + vB * vB * vT * vT * xT * xT * Math.pow(Math.cos(bT), 2) - vB * vB * vT * vT * xT * xT * Math.pow(Math.sin(bT), 2) - 2 * vB * vB * vT * xT * Math.cos(bT) * Math.sqrt(xT * xT * (vB * vB - vT * vT * Math.pow(Math.sin(bT), 2)))) / Math.pow((vB * vB - vT * vT), 2))));
-		//correction = 0;
+		correction = Math.acos((xT * (vB * vB * xT - vT * vT * xT * Math.sin(bT)* Math.sin(bT) - vT * Math.cos(bT) * Math.sqrt(xT * xT * (vB * vB - vT * vT * Math.sin(bT) * Math.sin(bT))))) / ((vB * vB - vT * vT) * xT * Math.sqrt((Math.pow(vB, 4) * xT * xT + vB * vB * vT * vT * xT * xT * Math.pow(Math.cos(bT), 2) - vB * vB * vT * vT * xT * xT * Math.pow(Math.sin(bT), 2) - 2 * vB * vB * vT * xT * Math.cos(bT) * Math.sqrt(xT * xT * (vB * vB - vT * vT * Math.pow(Math.sin(bT), 2)))) / Math.pow((vB * vB - vT * vT), 2))));
 		
 		if(en == null){
 			en = new MicroEnemy();

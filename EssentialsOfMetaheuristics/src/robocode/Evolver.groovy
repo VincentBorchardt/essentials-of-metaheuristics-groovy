@@ -7,7 +7,7 @@ import singleStateMethods.IteratedLocalSearchRandomRestarts
 
 class Evolver {
 	static numRuns = 1
-	static numIterations = 300
+	static numIterations = 100
 	static battleRunner
 	static isWindows = false
 
