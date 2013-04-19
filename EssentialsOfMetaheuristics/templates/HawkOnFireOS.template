@@ -62,10 +62,9 @@ public class Individual_${id} extends AdvancedRobot
 		double distanceToTarget = myPos.distance(target.pos);
 		
 	//**** gun ******************//
-		// HeadOnTargeting there's nothing I can say about this
-		if(getGunTurnRemaining() == 0 && myEnergy > 1) {
-			//setFire(Math.min(Math.min(myEnergy/6d, 1300d/distanceToTarget), target.energy/3d) );
-			setFire(1);
+		if(getGunTurnRemaining() == 0 && myEnergy > 1 && distanceToTarget <= 1200) {
+			setFire(Math.min(Math.min(myEnergy/6d, 1300d/distanceToTarget), target.energy/3d));
+			//setFire(1);
 		}
 		
 		Point2D.Double newTarget = new Point2D.Double(target.pos.x, target.pos.y);
@@ -158,45 +157,9 @@ public class Individual_${id} extends AdvancedRobot
 		yT = getY()+Math.cos(e.getBearingRadians())*e.getDistance();
 		vT = e.getVelocity();
 
-		vB = 20 - 3 * 1;
+		vB = 20 - 3 * Math.min(Math.min(getEnergy()/6d, 1300d/e.getDistance()), e.getEnergy()/3d);
 
-		tF =
-			(
-				vT*xT*Math.cos(bT)-
-				vT*xU*Math.cos(bT)+
-				vT*yT*Math.sin(bT)-
-				vT*yU*Math.sin(bT)+
-				(1/2)*Math.sqrt(
-					4*
-					(Math.pow(vB,2)-Math.pow(vT,2))*
-					(
-						Math.pow(xT,2)-
-						2*xT*xU+
-						Math.pow(xU,2)+
-						Math.pow(yT-yU,2)
-					)+
-					4*
-					Math.pow(vT,2)*
-					Math.pow(
-						(xT-xU)*Math.cos(bT)+
-							(yT-yU)*Math.sin(bT),
-						2
-					)
-				)
-			)/
-			(
-				Math.pow(vB,2)-
-				Math.pow(vT,2)
-			);
-
-		bB = 
-			Math.atan2(
-				yT+tF*vT*Math.sin(bT)-yU,
-				xT+tF*vT*Math.cos(bT)-xU
-			);
-		bB = -bB + Math.PI/2;
-
-/* Assumes speed of bullet adds with speed of robot
+/* Assumes speed of bullet adds with speed of robot */
 		tF =
 			(
 				vT*xT*Math.cos(bT)-
@@ -243,7 +206,6 @@ public class Individual_${id} extends AdvancedRobot
 					(xU+tF*vU*Math.cos(bU))
 			);
 		bB = -bB + Math.PI/2;
-*/
 
 		if(en == null){
 			en = new MicroEnemy();
