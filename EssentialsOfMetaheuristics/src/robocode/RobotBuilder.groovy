@@ -32,6 +32,21 @@ class RobotBuilder {
 		//println(proc.in.text)
 		assert proc.err.text.equals("")
 		assert proc.exitValue() == 0
+		if (isWindows) {
+			command = ["cmd", "/c", "move", "${robotPackage}\\${fileNamePrefix}*", "C:\\robocode\\robots\\evolved"]
+			proc = command.execute(null, new File(robotDirectory))
+			proc.waitFor()
+			//println(proc.in.text)
+			assert proc.err.text.equals("")
+			assert proc.exitValue() == 0
+
+			command = ["cmd", "/c", "move", "${fileNamePrefix}.jar", "C:\\robocode\\robots\\evolved"]
+			proc = command.execute(null, new File(robotDirectory))
+			proc.waitFor()
+			//println(proc.in.text)
+			assert proc.err.text.equals("")
+			assert proc.exitValue() == 0
+		}
 	}
 	
 	def buildPropertiesFile(values,isWindows=true) {

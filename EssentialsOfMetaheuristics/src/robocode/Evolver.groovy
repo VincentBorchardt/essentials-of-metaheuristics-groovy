@@ -24,7 +24,13 @@ class Evolver {
 	}
 
 	static main(args) {
-		//battleRunner = new BattleRunner("templates/battle.template")
+		/*
+		if (isWindows) {
+			battleRunner = new BattleRunner("templates/battle.template")
+		} else {
+			battleRunner = new BattleRunner("templates/battleWindows.template")
+		}
+		*/
 		def searchers = [
 			new IteratedLocalSearchRandomRestarts()
 			//new HillClimber()

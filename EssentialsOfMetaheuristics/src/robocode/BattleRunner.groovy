@@ -50,10 +50,8 @@ class BattleRunner {
 		battleFile << result.toString()
 	}
 
-	def runBattle(id, nodisplay=true, isWindows=true, prebuilt=false) {//nodisplay option goes in here
-		if (!prebuilt) {
-			linkJarFile(id, isWindows)
-		}
+	def runBattle(id, nodisplay=true, isWindows=true) {//nodisplay option goes in here
+		linkJarFile(id, isWindows)
 		File battleFile = new File("${robotDirectory}/evolve.battle")
 		def command
 		if (isWindows) {
