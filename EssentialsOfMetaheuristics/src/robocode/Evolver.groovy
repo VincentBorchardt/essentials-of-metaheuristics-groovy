@@ -6,8 +6,8 @@ import singleStateMethods.HillClimber
 import singleStateMethods.IteratedLocalSearchRandomRestarts
 
 class Evolver {
-	static numRuns = 10
-	static numIterations = 10
+	static numRuns = 5
+	static numIterations = 20
 	static battleRunner
 	static isWindows = false
 
