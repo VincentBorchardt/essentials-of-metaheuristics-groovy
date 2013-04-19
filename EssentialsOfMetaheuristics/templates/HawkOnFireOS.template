@@ -100,7 +100,6 @@ public class Individual_${id} extends AdvancedRobot
 			
 		// just the normal goTo stuff
 			double angle = calcAngle(nextDestination, myPos) - getHeadingRadians();
-			angle += ${movementPerturbation};
 			double direction = 1;
 			
 			if(Math.cos(angle) < 0) {
@@ -132,10 +131,10 @@ public class Individual_${id} extends AdvancedRobot
 			//		but this wasn't going to give me good results
 			// -	1 / p.distanceSq(en.pos) is just the normal anti gravity thing
 			if(en.live) {
-				eval += (${enemy_energy})*en.energy;
-				eval += (${my_energy})*myEnergy;
-				eval += (${angle_diff})*(calcAngle(myPos, p) - calcAngle(en.pos, p));
-				eval += (${distance})*p.distanceSq(en.pos);
+				eval += en.energy;
+				eval += myEnergy;
+				eval += (calcAngle(myPos, p) - calcAngle(en.pos, p));
+				eval += p.distanceSq(en.pos);
 			}
 		}
 		return eval;
@@ -206,6 +205,8 @@ public class Individual_${id} extends AdvancedRobot
 					(xU+tF*vU*Math.cos(bU))
 			);
 		bB = -bB + Math.PI/2;
+		
+		bB = fun(e.getDistance(), bB);
 
 		if(en == null){
 			en = new MicroEnemy();
@@ -223,6 +224,10 @@ public class Individual_${id} extends AdvancedRobot
 		
 		// locks the radar if there is only one opponent left
 		if(getOthers()==1)	setTurnRadarLeftRadians(getRadarTurnRemainingRadians());
+	}
+	
+	private double fun(double distance, double adjustedBearing) {
+		return (${predictiveAimingFunction});
 	}
 	
 //- minor events ----------------------------------------------------------------------------------------------------------------------------

@@ -16,7 +16,7 @@ class WatchBattle {
 	 */
 	static BattleRunner battleRunner
 	static RobotBuilder robotBuilder
-	static isWindows = true
+	static isWindows = false
 	static noDisplay = false
 	static id
 
