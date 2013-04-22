@@ -7,7 +7,7 @@ import problems.GP.GPProblem
 
 class RobotCodeEvolutionProblem {
 	protected rand = new java.util.Random()
-	def maximalQuality = { 9999 }
+	def maximalQuality = { 99999 }
 	def noDisplay = true
 	def isWindows = false
 	def template = null
@@ -28,7 +28,7 @@ class RobotCodeEvolutionProblem {
 		if(a.get("score")==null){
 			++evalCount
 			def scoreText = RunBattle.runBattle(template, a, noDisplay, isWindows)
-			def score = RunBattle.getScore(scoreText, a.get("id"))
+			def score = RunBattle.getScore(scoreText, a.get("id"), isWindows)
 			a.put("score", score)
 			return score
 		}

@@ -15,7 +15,7 @@ class RunBattle {
 		robotBuilder.buildJarFile(values,isWindows)
 		
 		if (isWindows) {
-			battleRunner = new BattleRunner("templates\\battle.template")
+			battleRunner = new BattleRunner("templates\\battleWindows.template")
 		} else {
 			battleRunner = new BattleRunner("templates/battle.template")
 		}
@@ -26,15 +26,21 @@ class RunBattle {
 		// returns list of lines from console output
 	}
 	
-	static getScore(scoreText, id) {
+	static getScore(scoreText, id, isWindows=true) {
 		def result = "missing"
-		def pattern = ~/evolved\.Individual_${id}\s+(\d+)/
+		def pattern
+		if (isWindows) {
+			pattern = ~/evolved\.Individual_${id}\*\s+(\d+)/
+		} else {
+			pattern = ~/evolved\.Individual_${id}\s+(\d+)/
+		}
 		scoreText.each { line ->
 			def m = (line =~ pattern)
 			if (m) {
 				result = Integer.parseInt(m[0][1])
 			}
 		}
+		//println result
 		if (result != "missing") {
 			return result
 		} else {

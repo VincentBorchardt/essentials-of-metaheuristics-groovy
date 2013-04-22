@@ -6,10 +6,10 @@ import singleStateMethods.HillClimber
 import singleStateMethods.IteratedLocalSearchRandomRestarts
 
 class Evolver {
-	static numRuns = 5
-	static numIterations = 20
+	static numRuns = 100
+	static numIterations = 100
 	static battleRunner
-	static isWindows = false
+	static isWindows = true
 
 	static runExperiment(searchers, problems) {
 		for (p in problems) {
@@ -38,7 +38,7 @@ class Evolver {
 		]
 		def problems = [
 			//new SimpleRobotEvolutionProblem(maxIterations:numIterations)
-			new RobotCodeEvolutionProblem(maxIterations:numIterations)
+			new RobotCodeEvolutionProblem(maxIterations:numIterations, isWindows:isWindows)
 		]
 		// It would be nice to collect the total time here and include it in the
 		// output.

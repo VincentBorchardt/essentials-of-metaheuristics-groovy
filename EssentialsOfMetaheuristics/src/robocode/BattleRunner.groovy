@@ -67,32 +67,25 @@ class BattleRunner {
 		
 		def proc = command.execute(null, new File(robotDirectory))
 		def errStream
+		def lines
 		if (isWindows) {
 			def initialSize = 4096
 			errStream = new ByteArrayOutputStream(initialSize)
 	
-			Thread.start{
-				try {
-					 proc.in.eachLine { line ->
-						println line
-					 }
-				} catch (Exception e) {
-					e.printStackTrace()
-				}
-			}
-	
 			proc.consumeProcessErrorStream(errStream)
 		}
 		proc.waitFor()
+		lines = proc.in.text.split("\n")
 
 		if (isWindows) {
 			assert errStream.size() == 0, errStream
+		} else {
+			lines = proc.in.text.split("\n")
 		}
-
+		
 		assert proc.exitValue() == 0, proc.err.text
 		//println proc.err.text
 		assert proc.err.text.equals("")
-		def lines = proc.in.text.split("\n")
 		return lines
 	}
 	
