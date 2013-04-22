@@ -38,7 +38,7 @@ class RobotCodeEvolutionProblem {
 	
 
 	def create = {
-		def id = rand.nextInt(1000000)
+		def id = rand.nextInt(100000000)
 		def aimingFunctionTree=gpTree.create()
 		def values = ["id" : id, "aimingFunctionTree" : aimingFunctionTree, "predictiveAimingFunction" : aimingFunctionTree.toString()]
 //		def robotBuilder = new RobotBuilder("templates/HawkOnFireOS.template")
@@ -61,7 +61,7 @@ class RobotCodeEvolutionProblem {
 	 */
 	
 	def tweak = { a, mutationRate = 0.5 ->
-		def new_id = rand.nextInt(1000000)
+		def new_id = rand.nextInt(100000000)
 		def new_aimingFunctionTree = gpTree.tweak((a.get("aimingFunctionTree")), mutationRate)
 		def new_values = ["id" : new_id, "aimingFunctionTree" : new_aimingFunctionTree, "predictiveAimingFunction" : new_aimingFunctionTree.toString()]
 		return new_values
