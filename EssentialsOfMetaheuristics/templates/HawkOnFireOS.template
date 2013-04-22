@@ -206,7 +206,7 @@ public class Individual_${id} extends AdvancedRobot
 			);
 		bB = -bB + Math.PI/2;
 		
-		bB = fun(e.getDistance(), bB);
+		bB = evolvedFunctionBB(e.getDistance(), bB);
 
 		if(en == null){
 			en = new MicroEnemy();
@@ -226,7 +226,7 @@ public class Individual_${id} extends AdvancedRobot
 		if(getOthers()==1)	setTurnRadarLeftRadians(getRadarTurnRemainingRadians());
 	}
 	
-	private double fun(double distance, double adjustedBearing) {
+	private double evolvedFunctionBB(double distance, double adjustedBearing) {
 		return (${predictiveAimingFunction});
 	}
 	

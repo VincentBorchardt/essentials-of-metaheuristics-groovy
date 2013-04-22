@@ -60,7 +60,7 @@ class RobotCodeEvolutionProblem {
 	 * it alone and move on.
 	 */
 	
-	def tweak = { a, mutationRate = 1 ->
+	def tweak = { a, mutationRate = 0.5 ->
 		def new_id = rand.nextInt(1000000)
 		def new_aimingFunctionTree = gpTree.tweak((a.get("aimingFunctionTree")), mutationRate)
 		def new_values = ["id" : new_id, "aimingFunctionTree" : new_aimingFunctionTree, "predictiveAimingFunction" : new_aimingFunctionTree.toString()]

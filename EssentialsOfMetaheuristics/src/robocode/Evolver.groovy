@@ -1,13 +1,14 @@
 package robocode
 
+import populationMethods.GeneticAlgorithm
 import populationMethods.MuCommaLambdaES
 import populationMethods.MuPlusLambdaES
 import singleStateMethods.HillClimber
 import singleStateMethods.IteratedLocalSearchRandomRestarts
 
 class Evolver {
-	static numRuns = 100
-	static numIterations = 2
+	static numRuns = 1
+	static numIterations = 10
 	static battleRunner
 	static isWindows = false
 
@@ -34,8 +35,9 @@ class Evolver {
 		*/
 		def searchers = [
 			//new IteratedLocalSearchRandomRestarts()
-			new HillClimber()
+			//new HillClimber()
 			//new MuPlusLambdaES()
+			new GeneticAlgorithm(crossover:new RobotCrossover().crossover)
 		]
 		def problems = [
 			//new SimpleRobotEvolutionProblem(maxIterations:numIterations)

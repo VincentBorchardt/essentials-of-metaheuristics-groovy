@@ -34,6 +34,7 @@ class GeneticAlgorithm {
 				if(newQuality > qualityOfBest) {
 					best = individual
 					qualityOfBest = newQuality
+					println best
 				}
 				
 			}
