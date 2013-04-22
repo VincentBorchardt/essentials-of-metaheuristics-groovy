@@ -15,6 +15,8 @@ class HillClimber {
 			if (rQuality > sQuality) {
 				s = r
 				sQuality = rQuality
+				//println rQuality
+				//println r
 			}
 		}
 		return s

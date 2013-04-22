@@ -79,8 +79,6 @@ class BattleRunner {
 
 		if (isWindows) {
 			assert errStream.size() == 0, errStream
-		} else {
-			lines = proc.in.text.split("\n")
 		}
 		
 		assert proc.exitValue() == 0, proc.err.text

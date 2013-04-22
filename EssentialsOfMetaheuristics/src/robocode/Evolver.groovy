@@ -7,9 +7,9 @@ import singleStateMethods.IteratedLocalSearchRandomRestarts
 
 class Evolver {
 	static numRuns = 100
-	static numIterations = 100
+	static numIterations = 2
 	static battleRunner
-	static isWindows = true
+	static isWindows = false
 
 	static runExperiment(searchers, problems) {
 		for (p in problems) {
@@ -17,7 +17,8 @@ class Evolver {
 				for (i in 0 ..< numRuns) {
 					p.evalCount = 0
 					def result = s.maximize(p)
-					println "${s.toString()}\t${p.toString()}\t${p.quality(result)}\t${result}"
+					def tree = result.get("aimingFunctionTree")
+					println "${s.toString()}\t${p.toString()}\t${p.quality(result)}\n${tree}"
 				}
 			}
 		}
