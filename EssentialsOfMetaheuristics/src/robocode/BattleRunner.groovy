@@ -15,11 +15,12 @@ class BattleRunner {
 	def robotDirectory = "evolved_robots"
 	def robotDirectoryAbsolute = new File(robotDirectory).absolutePath
 	def template
+	def robotName
 	
 	static getScore(scoreText, id) {
 		def result = false
 		scoreText.each { line ->
-			def pattern = ~/evolved\.Individual_${id}\s+(\d+)/
+			def pattern = ~/evolved\.${robotName}_${id}\s+(\d+)/
 			def m = (line =~ pattern)
 			if (m) {
 				result = Integer.parseInt(m[0][1])
@@ -32,7 +33,8 @@ class BattleRunner {
 		}
 	}
 
-	def BattleRunner(String templateFileName) {
+	def BattleRunner(String templateFileName, String RobotName) {
+		robotName = RobotName
 		def engine = new SimpleTemplateEngine()
 		template = engine.createTemplate(new File(templateFileName))
 	}
@@ -95,10 +97,10 @@ class BattleRunner {
 		def command
 		if (isWindows) {
 			robotDir = new File("${robocodeDirWindows}\\robots/")
-			command = ["cmd", "/c", "mklink", "/D", "${robotDirectoryAbsolute}\\Individual_${id}.jar","%CD%"]
+			command = ["cmd", "/c", "mklink", "/D", "${robotDirectoryAbsolute}\\${robotName}_${id}.jar","%CD%"]
 		} else {
 			robotDir = new File("${robocodeDirLinux}/robots/")
-			command = "ln -s ${robotDirectoryAbsolute}/Individual_${id}.jar ."
+			command = "ln -s ${robotDirectoryAbsolute}/${robotName}_${id}.jar ."
 		}
 		def proc = command.execute(null, robotDir)
 		def initialSize = 4096

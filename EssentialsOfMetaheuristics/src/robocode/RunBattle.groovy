@@ -2,22 +2,24 @@ package robocode
 
 class RunBattle {
 	static Random random = new Random()
+	static robotName
 	
-	static runBattle(template, values, noDisplay=true, isWindows=true) {
+	static runBattle(robotTemplate, values, noDisplay=true, isWindows=true) {
+		robotName = robotTemplate
 		def RobotBuilder robotBuilder
 		def BattleRunner battleRunner
 		def id = values.get("id")
 		if (isWindows) {
-			robotBuilder = new RobotBuilder("templates\\HawkOnFireOS.template")
+			robotBuilder = new RobotBuilder("templates\\${robotTemplate}.template", robotTemplate)
 		} else {
-			robotBuilder = new RobotBuilder("templates/HawkOnFireOS.template")
+			robotBuilder = new RobotBuilder("templates/${robotTemplate}.template", robotTemplate)
 		}
 		robotBuilder.buildJarFile(values,isWindows)
 		
 		if (isWindows) {
-			battleRunner = new BattleRunner("templates\\battleWindows.template")
+			battleRunner = new BattleRunner("templates\\battleWindows.template", robotName)
 		} else {
-			battleRunner = new BattleRunner("templates/battle.template")
+			battleRunner = new BattleRunner("templates/battle.template", robotName)
 		}
 		
 		battleRunner.buildBattleFile(id,isWindows)
@@ -30,9 +32,9 @@ class RunBattle {
 		def result = "missing"
 		def pattern
 		if (isWindows) {
-			pattern = ~/evolved\.Individual_${id}\*\s+(\d+)/
+			pattern = ~/evolved\.${robotName}_${id}\*\s+(\d+)/
 		} else {
-			pattern = ~/evolved\.Individual_${id}\s+(\d+)/
+			pattern = ~/evolved\.${robotName}_${id}\s+(\d+)/
 		}
 		scoreText.each { line ->
 			def m = (line =~ pattern)
@@ -40,7 +42,6 @@ class RunBattle {
 				result = Integer.parseInt(m[0][1])
 			}
 		}
-		//println result
 		if (result != "missing") {
 			return result
 		} else {

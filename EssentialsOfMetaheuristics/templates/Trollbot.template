@@ -20,7 +20,7 @@ import java.awt.geom.Point2D;
  *   distance : the coefficient for the distance between the point and the enemy
  */
  
-public class HawkOnFireOS_${id} extends AdvancedRobot
+public class Trollbot_${id} extends AdvancedRobot
 {
 	static Hashtable<String, MicroEnemy> enemies = new Hashtable<String, MicroEnemy>();
 	static MicroEnemy target;
@@ -205,8 +205,6 @@ public class HawkOnFireOS_${id} extends AdvancedRobot
 					(xU+tF*vU*Math.cos(bU))
 			);
 		bB = -bB + Math.PI/2;
-		
-		bB = evolvedFunctionBB(e.getDistance(), bB);
 
 		if(en == null){
 			en = new MicroEnemy();
@@ -224,10 +222,6 @@ public class HawkOnFireOS_${id} extends AdvancedRobot
 		
 		// locks the radar if there is only one opponent left
 		if(getOthers()==1)	setTurnRadarLeftRadians(getRadarTurnRemainingRadians());
-	}
-	
-	private double evolvedFunctionBB(double distance, double adjustedBearing) {
-		return (${predictiveAimingFunction});
 	}
 	
 //- minor events ----------------------------------------------------------------------------------------------------------------------------

@@ -6,8 +6,10 @@ class RobotBuilder {
 	def template
 	def robotDirectory = "evolved_robots"
 	def robotPackage = "evolved"
+	def robotName
 	
-	def RobotBuilder(String templateFileName) {
+	def RobotBuilder(String templateFileName, String RobotName) {
+		robotName = RobotName
 		def engine = new SimpleTemplateEngine()
 		template = engine.createTemplate(new File(templateFileName))
 	}
@@ -16,7 +18,7 @@ class RobotBuilder {
 		buildClassFile(values,isWindows)
 		buildPropertiesFile(values,isWindows)
 		def id = values['id']
-		def fileNamePrefix = "Individual_${id}"
+		def fileNamePrefix = "${robotName}_${id}"
 		def command = "jar -cf ${fileNamePrefix}.jar"
 		if (isWindows) {
 			[".java", ".class", "\$MicroEnemy.class", ".properties"].each { suffix ->
@@ -51,7 +53,7 @@ class RobotBuilder {
 	
 	def buildPropertiesFile(values,isWindows=true) {
 		def id = values['id']
-		def filenamePrefix = "Individual_${id}"
+		def filenamePrefix = "${robotName}_${id}"
 		def propertiesFileName = "${filenamePrefix}.properties"
 		if (isWindows) {
 			def propertiesFile = new File("${robotDirectory}\\${robotPackage}\\${propertiesFileName}")
@@ -107,7 +109,7 @@ class RobotBuilder {
 	
 	def makeJavaFileName(values,isWindows=true) {
 		def id = values['id']
-		def filename = "Individual_${id}.java"
+		def filename = "${robotName}_${id}.java"
 	}
 
 	private File createFile(javaFileName,isWindows=true) {

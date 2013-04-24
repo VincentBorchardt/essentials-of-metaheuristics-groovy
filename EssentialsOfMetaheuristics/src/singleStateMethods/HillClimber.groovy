@@ -16,7 +16,7 @@ class HillClimber {
 				s = r
 				sQuality = rQuality
 				//println rQuality
-				//println r
+				println r
 			}
 		}
 		return s

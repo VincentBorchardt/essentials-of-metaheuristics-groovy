@@ -12,14 +12,14 @@ class RobotCodeEvolutionProblem {
 	def isWindows = false
 	def template = null
 	def functionList=[new Addition(), new Subtraction(), new Multiplication(), new Division()]
-	def variableList=["distance","adjustedBearing"]
-	def constantList=[0, 1, 2, 0.5, 0.1, -1]
-	def defaultMaxTreeSize = 20
+	def variableList=["(distance / 100)","adjustedBearing"]
+	def constantList=[0, 1, 0.01, 0.5, 0.1, -1]
+	def defaultMaxTreeSize = 30
 	Integer evalCount = 0
 	Integer maxIterations = 10
-	def constantChance=0.3
-	def variableChance=0.3
-	def functionChance=0.4
+	def constantChance=0.1
+	def variableChance=0.2
+	def functionChance=0.7
 	TreeGenerator gen
 	def GPProblem gpTree=new GPProblem(variableList:variableList, constantList:constantList, functionList:functionList, treeSize:defaultMaxTreeSize,
 				constantChance:constantChance, variableChance:variableChance, functionChance:functionChance)

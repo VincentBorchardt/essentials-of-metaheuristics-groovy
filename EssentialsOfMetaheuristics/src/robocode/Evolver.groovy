@@ -8,7 +8,7 @@ import singleStateMethods.IteratedLocalSearchRandomRestarts
 
 class Evolver {
 	static numRuns = 1
-	static numIterations = 10
+	static numIterations = 30
 	static battleRunner
 	static isWindows = false
 
@@ -35,13 +35,13 @@ class Evolver {
 		*/
 		def searchers = [
 			//new IteratedLocalSearchRandomRestarts()
-			//new HillClimber()
+			new HillClimber()
 			//new MuPlusLambdaES()
-			new GeneticAlgorithm(crossover:new RobotCrossover().crossover)
+			//new GeneticAlgorithm(crossover:new RobotCrossover().crossover, popsize:20)
 		]
 		def problems = [
-			//new SimpleRobotEvolutionProblem(maxIterations:numIterations)
-			new RobotCodeEvolutionProblem(maxIterations:numIterations, isWindows:isWindows)
+			new SimpleRobotEvolutionProblem(maxIterations:numIterations, isWindows:isWindows)
+			//new RobotCodeEvolutionProblem(maxIterations:numIterations, isWindows:isWindows)
 		]
 		// It would be nice to collect the total time here and include it in the
 		// output.

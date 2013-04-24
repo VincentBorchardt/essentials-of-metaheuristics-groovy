@@ -7,13 +7,13 @@ class SimpleRobotEvolutionProblem {
 	def maximalQuality = { 9999 }
 	def noDisplay = true
 	def isWindows = false
-	def template = null
+	def template = "Trollbot"
 
 	def quality = { a ->
 		if(a.get("score")==null){
 			++evalCount
 			def scoreText = RunBattle.runBattle(template, a, noDisplay, isWindows)
-			def score = RunBattle.getScore(scoreText, a.get("id"))
+			def score = RunBattle.getScore(scoreText, a.get("id"), isWindows)
 			a.put("score", score)
 			return score
 		}
@@ -24,14 +24,18 @@ class SimpleRobotEvolutionProblem {
 	Integer maxIterations = 10
 
 	def create = {
-		def id = rand.nextInt(1000000)
-		def enemy_energy = rand.nextFloat() * 100
-		def my_energy = rand.nextFloat() * 100
-		def angle_diff = rand.nextFloat() * 10
-		def distance = rand.nextFloat() * 100
-		def movementPerturbation = 0//(2*rand.nextFloat()-1) * Math.PI / 8
-		def values = ["id" : id, "enemy_energy" : enemy_energy, "my_energy" : my_energy, "angle_diff" : angle_diff, 
-			"distance" : distance, "movementPerturbation": movementPerturbation]
+		def id = rand.nextInt(100000000)
+		//def enemy_energy = rand.nextFloat() * 100
+		//def my_energy = rand.nextFloat() * 100
+		//def angle_diff = rand.nextFloat() * 10
+		//def distance = rand.nextFloat() * 100
+		//def movementPerturbation = 0//(2*rand.nextFloat()-1) * Math.PI / 8
+		//def values = ["id" : id, "enemy_energy" : enemy_energy, "my_energy" : my_energy, "angle_diff" : angle_diff, 
+		//	"distance" : distance, "movementPerturbation": movementPerturbation]
+		def directionSwitchChance = rand.nextFloat()
+		def radius = rand.nextFloat()*200 + 50
+		def deltaTheta = rand.nextFloat()*3
+		def values = ["id":id, "directionSwitchChance":directionSwitchChance, "radius":radius, "deltaTheta":deltaTheta] 
 //		def robotBuilder = new RobotBuilder("templates/HawkOnFireOS.template")
 //		robotBuilder.buildJarFile(values)
 //		new File("evolved_robots/evolved/Individual_${id}.java")
@@ -52,14 +56,18 @@ class SimpleRobotEvolutionProblem {
 	 */
 
 	def tweak = { a, mutationRate = 1 ->
-		def new_id = rand.nextInt(1000000)
-		def new_enemy_energy = a.get("enemy_energy")+(rand.nextFloat()*2-1)*mutationRate
-		def new_my_energy = a.get("my_energy")+(rand.nextFloat()*2-1)*mutationRate
-		def new_angle_diff = a.get("angle_diff")+(rand.nextFloat()*2-1)*mutationRate
-		def new_distance = a.get("distance")+(rand.nextFloat()*2-1)*mutationRate
-		def new_movementPerturbation = a.get("movementPerturbation") + (2*rand.nextFloat()-1)*(Math.PI/4)*mutationRate
-		def new_values = ["id" : new_id, "enemy_energy" : new_enemy_energy, "my_energy" : new_my_energy, "angle_diff" : new_angle_diff,
-			"distance" : new_distance, "movementPerturbation": new_movementPerturbation]
+		def new_id = rand.nextInt(100000000)
+		//def new_enemy_energy = a.get("enemy_energy")+(rand.nextFloat()*2-1)*mutationRate
+		//def new_my_energy = a.get("my_energy")+(rand.nextFloat()*2-1)*mutationRate
+		//def new_angle_diff = a.get("angle_diff")+(rand.nextFloat()*2-1)*mutationRate
+		//def new_distance = a.get("distance")+(rand.nextFloat()*2-1)*mutationRate
+		//def new_movementPerturbation = a.get("movementPerturbation") + (2*rand.nextFloat()-1)*(Math.PI/4)*mutationRate
+		//def new_values = ["id" : new_id, "enemy_energy" : new_enemy_energy, "my_energy" : new_my_energy, "angle_diff" : new_angle_diff,
+		//	"distance" : new_distance, "movementPerturbation": new_movementPerturbation]
+		def new_directionSwitchChance = ((2*rand.nextFloat()-1)/5)*mutationRate + a.get("directionSwitchChance")
+		def new_radius = ((2*rand.nextFloat()-1)*50)*mutationRate + a.get("radius")
+		def new_deltaTheta = (2*rand.nextFloat()-1)*mutationRate + a.get("deltaTheta")
+		def new_values = ["id":new_id, "directionSwitchChance":new_directionSwitchChance, "radius":new_radius, "deltaTheta":new_deltaTheta]
 		return new_values
 	}
 

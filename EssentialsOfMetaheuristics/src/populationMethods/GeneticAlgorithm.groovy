@@ -28,6 +28,7 @@ class GeneticAlgorithm {
 		
 		def best = problem.create()
 		def qualityOfBest = problem.quality(best)
+		println best
 		while(!problem.terminate(best, qualityOfBest)) {
 			for(def individual: startingPopulation) {
 				def newQuality = problem.quality(individual)
