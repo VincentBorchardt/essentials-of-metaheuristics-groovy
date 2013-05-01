@@ -19,12 +19,13 @@ class WatchBattle {
 	static isWindows = false
 	static noDisplay = false
 	static id
+	static template = "Trollbot"
 
 	static main(args) {
 		if (isWindows) {
-			battleRunner = new BattleRunner("templates\\battleWindows.template")
+			battleRunner = new BattleRunner("templates\\battleWindows.template", template)
 		} else {
-			battleRunner = new BattleRunner("templates/battle.template")
+			battleRunner = new BattleRunner("templates/battle.template", template)
 		}
 		id = random.nextInt(1000000)
 		def enemy_energy = 17//random.nextFloat() * 100
@@ -32,14 +33,17 @@ class WatchBattle {
 		def angle_diff = 79//random.nextFloat() * 100
 		def distance = 68//random.nextFloat() * 100
 		def movementPerturbation = 0 //(2 * random.nextFloat()-1) * Math.PI / 8
+		def circleRadius = 100
+		def angleDelta = 0.5
+		def changeDirChance = 0.5
 
-		def values = ["id" : id, "enemy_energy" : enemy_energy, "my_energy" : my_energy, "angle_diff" : angle_diff,
-			"distance" : distance, "movementPerturbation": movementPerturbation]
+		def values = ["id":id, "enemy_energy":enemy_energy, "my_energy":my_energy, "angle_diff":angle_diff, "distance":distance,
+			"movementPerturbation":movementPerturbation, "circleRadius":circleRadius, "angleDelta":angleDelta, "changeDirChance":changeDirChance]
 
 		if (isWindows) {
-			robotBuilder = new RobotBuilder("templates\\HawkOnFireOS.template")
+			robotBuilder = new RobotBuilder("templates\\${template}", template)
 		} else {
-			robotBuilder = new RobotBuilder("templates/HawkOnFireOS.template")
+			robotBuilder = new RobotBuilder("templates/${template}.template", template)
 		}
 		robotBuilder.buildJarFile(values,isWindows)
 
