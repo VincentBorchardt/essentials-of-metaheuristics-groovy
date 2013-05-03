@@ -24,22 +24,22 @@ class SimpleRobotEvolutionProblem {
 
 	def create = {
 		def id = rand.nextInt(100000000)
-		def changeDirChance = 0.3
+		def changeDirPeriod = 10
 		def optimalDistance = 300
 		def rammingDistance = 80
-		def values = ["id":id,  "changeDirChance":changeDirChance, "optimalDistance":optimalDistance, "rammingDistance":rammingDistance]
+		def values = ["id":id,  "changeDirPeriod":changeDirPeriod, "optimalDistance":optimalDistance, "rammingDistance":rammingDistance]
 		return values
 	}
 	
 	def tweak = { a, mutationRate = 1 ->
 		def new_id = rand.nextInt(100000000)
-		def new_changeDirChance = Math.min(1, Math.max(0,
-			(2*rand.nextFloat()-1)*0.2*mutationRate + a.get("changeDirChance")))
+		def new_changeDirPeriod = Math.min(1, Math.max(0,
+			(2*rand.nextFloat()-1)*0.2*mutationRate + a.get("changeDirPeriod")))
 		def new_optimalDistance = Math.min(1000, Math.max(100,
 			(2*rand.nextFloat()-1)*25*mutationRate + a.get("optimalDistance")))
 		def new_rammingDistance = Math.min(200, Math.max(80,
 			(2*rand.nextFloat()-1)*10*mutationRate + a.get("rammingDistance")))
-		def new_values = ["id":new_id, "changeDirChance":new_changeDirChance, "optimalDistance":new_optimalDistance, "rammingDistance":new_rammingDistance]
+		def new_values = ["id":new_id, "changeDirPeriod":new_changeDirPeriod, "optimalDistance":new_optimalDistance, "rammingDistance":new_rammingDistance]
 		return new_values
 	}
 

@@ -30,10 +30,12 @@ public class Trollbot_${id} extends AdvancedRobot {
 	static double myEnergy;
 	static double angleDelta = 1;
 	static double angleCurrent = 0;
-	static double changeDirChance = ${changeDirChance};
+	static double changeDirPeriod = ${changeDirPeriod};
 	static double optimalDistance = ${optimalDistance};
 	static double rammingDistance = ${rammingDistance};
-	static int recalculatePeriod = 15;
+	static int recalculatePeriod = 5;
+	static int counter = 0;
+	static int recalculateSearchPeriod = 100;
 	static final Random random = new Random();
 	
 //- run -------------------------------------------------------------------------------------------------------------------------------------
@@ -56,6 +58,8 @@ public class Trollbot_${id} extends AdvancedRobot {
 			// wait until you have scanned all other bots. this should take around 7 to 9 ticks.
 			if(target.live) {// && getTime()>9) {
 				doMovementAndGun();
+			} else {
+				doRandomSearch();
 			}
 			execute();
 			
@@ -63,33 +67,46 @@ public class Trollbot_${id} extends AdvancedRobot {
 	}
 	
 //- stuff -----------------------------------------------------------------------------------------------------------------------------------
+	public void doRandomSearch() {
+		if (getTime() % recalculateSearchPeriod == 0) {
+			double angleToCenter = calcAngle(new Point2D.Double(getBattleFieldWidth()/2,getBattleFieldHeight()/2), myPos) - getHeadingRadians();
+			setTurnRightRadians(Utils.normalRelativeAngle(angleToCenter));
+			setAhead(8 * recalculateSearchPeriod);
+			setMaxVelocity(8d);
+		}
+	}
+	
 	public void doMovementAndGun() {
 		double distanceToTarget = myPos.distance(target.pos);
 		double distanceToPredictedTarget = myPos.distance(target.predictedLocation);
 		
 	//**** gun ******************//
 
-		if(Math.abs(getGunTurnRemaining()) == 0 && myEnergy > 1 && distanceToPredictedTarget <= 1200) {
-			//setFire(getBulletPower(myEnergy, distanceToTarget, target.energy));
+		if(Math.abs(getGunTurnRemaining()) < 3 && myEnergy > 1 && distanceToPredictedTarget <= 1200) {
+			setFire(getBulletPower(myEnergy, distanceToTarget, target.energy));
 		}
 
 		Point2D.Double newTarget = new Point2D.Double(target.predictedLocation.x, target.predictedLocation.y);
-		setTurnGunRightRadians(Utils.normalRelativeAngle(calcAngle(newTarget, myPos) - getGunHeadingRadians()));
+		setTurnGunRightRadians(Utils.normalRelativeAngle(calcAngle(target.predictedLocation, myPos) - getGunHeadingRadians()) - 0.2 * Math.signum(target.velocity));
 		
 	//**** move *****************//
 		if (getTime() % recalculatePeriod == 0) {
+			counter++;
 			double deviation;
 			if (distanceToTarget < rammingDistance) {
 				deviation = 0;
 			} else if (distanceToTarget < optimalDistance) {
 				deviation = Math.PI + ((distanceToTarget - rammingDistance)*(-Math.PI/2) / (optimalDistance-rammingDistance));
+			} else if (distanceToTarget < 900) {
+				deviation = (Math.PI/2) + ((distanceToTarget)*(-Math.PI/4) / (900 - optimalDistance));
 			} else {
-				deviation = (Math.PI/2) + ((distanceToTarget)*(-Math.PI/2) / (1200 - optimalDistance));
-			}// what if there is no target?
+				deviation = 0;
+			}
 			if (myPos.x < 50 || myPos.y < 50 || getBattleFieldWidth() - myPos.x < 50 || getBattleFieldHeight() - myPos.y < 50) {
 				angleDelta *= -1;
-			} else if (random.nextFloat() <= changeDirChance) {
+			} else if (counter % changeDirPeriod == 0) {
 				angleDelta *= -1;
+				counter = 0;
 			}
 			deviation *= angleDelta;
 			double angle = (calcAngle(target.pos, myPos) + deviation) - getHeadingRadians();
@@ -98,8 +115,9 @@ public class Trollbot_${id} extends AdvancedRobot {
 				angle += Math.PI;
 				direction = -1;
 			}
-			setTurnRightRadians(angle = Utils.normalRelativeAngle(angle));
+			setTurnRightRadians(Utils.normalRelativeAngle(angle));
 			setAhead(8 * direction * recalculatePeriod);
+			setMaxVelocity(8d);
 			//setMaxVelocity(Math.abs(angle) > 1 ? 0 : 8d);
 		}
 	}
@@ -129,7 +147,7 @@ public class Trollbot_${id} extends AdvancedRobot {
 	}
 	
 	public double getBulletPower(double uE, double tD, double tE) {
-		return Math.min(Math.min(uE/6d, 1300d/tD), tE/3d);
+		return Math.min(Math.min(uE/6d, 150000d/Math.pow(tD,2)), tE/3d);
 	}
 	
 	public double getBulletPower(ScannedRobotEvent e) {
@@ -142,77 +160,10 @@ public class Trollbot_${id} extends AdvancedRobot {
 		return getBulletPower(uE, tD, tE);
 	}
 	
-	public double getPredictiveHeading(ScannedRobotEvent e) {
-		double vB = 20 - 3 * getBulletPower(e);
-		double xT, yT, vT, bT, xU, yU, vU, bU, tF, bB;
-
-		xU = getX();
-		yU = getY();
-		//vU = getVelocity();
-		vU = 0;
-		bU = -getHeadingRadians()+Math.PI/2;
-
-		bT = -e.getHeadingRadians()+Math.PI/2;
-		xT = getX()+Math.sin(e.getBearingRadians())*e.getDistance();
-		yT = getY()+Math.cos(e.getBearingRadians())*e.getDistance();
-		vT = e.getVelocity();
-
-		/* Assumes speed of bullet adds with speed of robot */
-		tF =
-			(
-				vT*xT*Math.cos(bT)-
-				vT*xU*Math.cos(bT)-
-				vU*xT*Math.cos(bU)+
-				vU*xU*Math.cos(bU)+
-				vT*yT*Math.sin(bT)-
-				vT*yU*Math.sin(bT)-
-				vU*yT*Math.sin(bU)+
-				vU*yU*Math.sin(bU)+
-				Math.sqrt(
-					(
-						Math.pow(xT,2)-
-						2*xT*xU+
-						Math.pow(xU,2)+
-						Math.pow(yT-yU,2)
-					)*
-					(
-						Math.pow(vB,2)-
-						Math.pow(vT,2)-
-						Math.pow(vU,2)+
-						2*vT*vU*Math.cos(bT-bU)
-					)+
-					Math.pow(
-						vT*(xT-xU)*Math.cos(bT)-
-							vU*(xT-xU)*Math.cos(bU)+
-							(yT-yU)*(vT*Math.sin(bT)-vU*Math.sin(bU)),
-						2
-					)
-				)
-			) /
-			(
-				Math.pow(vB,2)-
-				Math.pow(vT,2)-
-				Math.pow(vU,2)+
-				2*vT*vU*Math.cos(bT-bU)
-			);
-
-		bB = 
-			Math.atan2(
-				yT+tF*vT*Math.sin(bT)-
-					(yU+tF*vU*Math.sin(bU)),
-				xT+tF*vT*Math.cos(bT)-
-					(xU+tF*vU*Math.cos(bU))
-			);
-		bB = -bB + Math.PI/2;
-		
-		return bB;
-	}
-	
 //- scan event ------------------------------------------------------------------------------------------------------------------------------
 	public void onScannedRobot(ScannedRobotEvent e)
 	{
 		MicroEnemy en = enemies.get(e.getName());
-		double bB = getPredictiveHeading(e);
 
 		if(en == null){
 			en = new MicroEnemy();
@@ -222,7 +173,18 @@ public class Trollbot_${id} extends AdvancedRobot {
 		en.energy = e.getEnergy();
 		en.live = true;
 		en.pos = calcPoint(myPos, e.getDistance(), getHeadingRadians() + e.getBearingRadians());
-		en.predictedLocation = calcPoint(myPos, e.getDistance(), getHeadingRadians() + bB);
+		
+		double vB = 20 - 3 * getBulletPower(e);
+		en.predictedLocation = new Point2D.Double(
+				en.pos.x + Math.signum(e.getVelocity()) * (e.getDistance() / vB) * 8 * Math.sin(e.getBearingRadians()),
+				en.pos.y + Math.signum(e.getVelocity()) * (e.getDistance() / vB) * 8 * Math.cos(e.getBearingRadians()));
+		if (Math.abs(e.getVelocity()) > 0) {
+			en.velocity = e.getVelocity();
+		} else {
+			if (target != null) {
+				en.velocity = target.velocity;
+			}
+		} 
 		
 		// normal target selection: the one closer to you is the most dangerous so attack him
 		if(!target.live || e.getDistance() < myPos.distance(target.pos)) {
@@ -252,5 +214,6 @@ public class Trollbot_${id} extends AdvancedRobot {
 		public double energy;
 		public boolean live;
 		public Point2D.Double predictedLocation;
+		public double velocity;
 	}
 }

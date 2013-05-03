@@ -28,11 +28,13 @@ class WatchBattle {
 			battleRunner = new BattleRunner("templates/battle.template", template)
 		}
 		id = random.nextInt(1000000)
-		def changeDirChance = 0.3
-		def optimalDistance = 300
-		def rammingDistance = 80
+		def changeDirPeriod = 5
+		def optimalDistance = 250
+		def rammingDistance = 70
+		def bT = 0*Math.PI/2
+		def vT = 7
 
-		def values = ["id":id, "changeDirChance":changeDirChance, "optimalDistance":optimalDistance, "rammingDistance":rammingDistance]
+		def values = ["id":id, "changeDirPeriod":changeDirPeriod, "optimalDistance":optimalDistance, "rammingDistance":rammingDistance, "bT":bT, "vT":vT]
 
 		if (isWindows) {
 			robotBuilder = new RobotBuilder("templates\\${template}.template", template)
