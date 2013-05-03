@@ -16,7 +16,7 @@ class WatchBattle {
 	 */
 	static BattleRunner battleRunner
 	static RobotBuilder robotBuilder
-	static isWindows = false
+	static isWindows = true
 	static noDisplay = false
 	static id
 	static template = "Trollbot"
@@ -33,15 +33,15 @@ class WatchBattle {
 		def angle_diff = 79//random.nextFloat() * 100
 		def distance = 68//random.nextFloat() * 100
 		def movementPerturbation = 0 //(2 * random.nextFloat()-1) * Math.PI / 8
-		def circleRadius = 100
-		def angleDelta = 0.5
-		def changeDirChance = 0.5
+		def circleRadius = 200//100 + random.nextFloat() * 400
+		def angleDelta = 0.5//0.2 + 2 * Math.PI * random.nextFloat()
+		def changeDirChance = 0.1
 
 		def values = ["id":id, "enemy_energy":enemy_energy, "my_energy":my_energy, "angle_diff":angle_diff, "distance":distance,
 			"movementPerturbation":movementPerturbation, "circleRadius":circleRadius, "angleDelta":angleDelta, "changeDirChance":changeDirChance]
 
 		if (isWindows) {
-			robotBuilder = new RobotBuilder("templates\\${template}", template)
+			robotBuilder = new RobotBuilder("templates\\${template}.template", template)
 		} else {
 			robotBuilder = new RobotBuilder("templates/${template}.template", template)
 		}

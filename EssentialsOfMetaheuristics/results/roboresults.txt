@@ -4,4 +4,5 @@ HC	SimpleRobotEvolutionProblem_10	2123	[id:225435, enemy_energy:17.0157811641693
 MuPlusLambdaES_2_6	SimpleRobotEvolutionProblem_100	2096	[id:740145, enemy_energy:66.89402461051941, my_energy:2.2328197956085205, angle_diff:16.57269597053528, distance:46.431249380111694, movementPerturbation:0.21856679579577998, out:java.io.PrintWriter@80f252, score:2096]
 ILS-RR	SimpleRobotEvolutionProblem_200	2095	[id:952548, enemy_energy:48.198243498802185, my_energy:48.86483132839203, angle_diff:26.96069061756134, distance:51.618168354034424, movementPerturbation:-0.007468325531449854, out:java.io.PrintWriter@7dac02, score:2095]
 
-Against Sample.SpinBot
+Against Sample.TrackFire
+[id:91707466, changeDirChance:0.8133213281631468, circleRadius:103.24150919914246, angleDelta:2.6405566930770874, out:java.io.PrintWriter@468bfb47, score:701]

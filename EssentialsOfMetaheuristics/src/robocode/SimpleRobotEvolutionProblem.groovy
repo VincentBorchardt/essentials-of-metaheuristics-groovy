@@ -6,7 +6,7 @@ class SimpleRobotEvolutionProblem {
 	protected rand = new java.util.Random()
 	def maximalQuality = { 9999 }
 	def noDisplay = true
-	def isWindows = false
+	def isWindows = true
 	def template = "Trollbot"
 
 	def quality = { a ->
@@ -33,9 +33,9 @@ class SimpleRobotEvolutionProblem {
 		//def values = ["id" : id, "enemy_energy" : enemy_energy, "my_energy" : my_energy, "angle_diff" : angle_diff, 
 		//	"distance" : distance, "movementPerturbation": movementPerturbation]
 		def directionSwitchChance = rand.nextFloat()
-		def radius = rand.nextFloat()*200 + 50
-		def deltaTheta = rand.nextFloat()*3
-		def values = ["id":id, "directionSwitchChance":directionSwitchChance, "radius":radius, "deltaTheta":deltaTheta] 
+		def radius = rand.nextFloat()*400 + 100
+		def deltaTheta = rand.nextFloat()
+		def values = ["id":id, "changeDirChance":directionSwitchChance, "circleRadius":radius, "angleDelta":deltaTheta] 
 //		def robotBuilder = new RobotBuilder("templates/HawkOnFireOS.template")
 //		robotBuilder.buildJarFile(values)
 //		new File("evolved_robots/evolved/Individual_${id}.java")
@@ -64,10 +64,10 @@ class SimpleRobotEvolutionProblem {
 		//def new_movementPerturbation = a.get("movementPerturbation") + (2*rand.nextFloat()-1)*(Math.PI/4)*mutationRate
 		//def new_values = ["id" : new_id, "enemy_energy" : new_enemy_energy, "my_energy" : new_my_energy, "angle_diff" : new_angle_diff,
 		//	"distance" : new_distance, "movementPerturbation": new_movementPerturbation]
-		def new_directionSwitchChance = ((2*rand.nextFloat()-1)/5)*mutationRate + a.get("directionSwitchChance")
-		def new_radius = ((2*rand.nextFloat()-1)*50)*mutationRate + a.get("radius")
-		def new_deltaTheta = (2*rand.nextFloat()-1)*mutationRate + a.get("deltaTheta")
-		def new_values = ["id":new_id, "directionSwitchChance":new_directionSwitchChance, "radius":new_radius, "deltaTheta":new_deltaTheta]
+		def new_directionSwitchChance = ((2*rand.nextFloat()-1)/5)*mutationRate + a.get("changeDirChance")
+		def new_radius = ((2*rand.nextFloat()-1)*50)*mutationRate + a.get("circleRadius")
+		def new_deltaTheta = (2*rand.nextFloat()-1)*mutationRate + a.get("angleDelta")
+		def new_values = ["id":new_id, "changeDirChance":new_directionSwitchChance, "circleRadius":new_radius, "angleDelta":new_deltaTheta]
 		return new_values
 	}
 

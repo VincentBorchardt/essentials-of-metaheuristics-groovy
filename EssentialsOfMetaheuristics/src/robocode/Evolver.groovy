@@ -7,10 +7,10 @@ import singleStateMethods.HillClimber
 import singleStateMethods.IteratedLocalSearchRandomRestarts
 
 class Evolver {
-	static numRuns = 1
-	static numIterations = 30
+	static numRuns = 10
+	static numIterations = 50
 	static battleRunner
-	static isWindows = false
+	static isWindows = true
 
 	static runExperiment(searchers, problems) {
 		for (p in problems) {

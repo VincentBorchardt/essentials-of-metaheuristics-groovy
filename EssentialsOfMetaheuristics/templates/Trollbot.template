@@ -7,6 +7,7 @@ import java.util.Hashtable;
 import java.util.Enumeration;
 import java.awt.geom.Rectangle2D;
 import java.awt.geom.Point2D;
+import java.util.Random;
 
 //  HawkOnFire - a robot by rozu
 //  With evolved evaluate() component by Nic McPhee
@@ -20,8 +21,7 @@ import java.awt.geom.Point2D;
  *   distance : the coefficient for the distance between the point and the enemy
  */
  
-public class Trollbot_${id} extends AdvancedRobot
-{
+public class Trollbot_${id} extends AdvancedRobot {
 	static Hashtable<String, MicroEnemy> enemies = new Hashtable<String, MicroEnemy>();
 	static MicroEnemy target;
 	static Point2D.Double nextDestination;
@@ -32,10 +32,10 @@ public class Trollbot_${id} extends AdvancedRobot
 	static double angleDelta = ${angleDelta};
 	static double angleCurrent = 0;
 	static double changeDirChance = ${changeDirChance};
+	static final Random random = new Random();
 	
 //- run -------------------------------------------------------------------------------------------------------------------------------------
-	public void run()
-	{
+	public void run() {
 		// body, turret, radar
 		setColors(Color.pink,Color.blue,Color.white);
 		setAdjustGunForRobotTurn(true);
@@ -55,7 +55,6 @@ public class Trollbot_${id} extends AdvancedRobot
 			if(target.live && getTime()>9) {
 				doMovementAndGun();
 			}
-			
 			execute();
 			
 		} while(true);
@@ -63,71 +62,47 @@ public class Trollbot_${id} extends AdvancedRobot
 	
 //- stuff -----------------------------------------------------------------------------------------------------------------------------------
 	public void doMovementAndGun() {
-		setTurnRight(-10*getHeadingRadians());
 		double distanceToTarget = myPos.distance(target.pos);
 		double distanceToPredictedTarget = myPos.distance(target.predictedLocation);
 		
 	//**** gun ******************//
-/*
-		if(getGunTurnRemaining() == 0 && myEnergy > 1 && distanceToPredictedTarget <= 1200) {
-			setFire(getBulletPower(myEnergy, distanceToTarget, target.energy));
+
+		if(Math.abs(getGunTurnRemaining()) == 0 && myEnergy > 1 && distanceToPredictedTarget <= 1200) {
+			//setFire(getBulletPower(myEnergy, distanceToTarget, target.energy));
 		}
-*/
+
 
 		Point2D.Double newTarget = new Point2D.Double(target.predictedLocation.x, target.predictedLocation.y);
 		setTurnGunRightRadians(Utils.normalRelativeAngle(calcAngle(newTarget, myPos) - getGunHeadingRadians()));
 		
 	//**** move *****************//
-		double distanceToNextDestination = myPos.distance(nextDestination);
 		
-		//search a new destination if I reached this one
-		nextDestination = new Point2D.Double(target.pos.x + circleRadius*Math.sin(angleCurrent), target.pos.y + circleRadius*Math.cos(angleCurrent));
-		if(distanceToNextDestination < circleRadius + 20) {
-			
-			// there should be better formulas then this one but it is basically here to increase OneOnOne performance. with more bots
-			// addLast will mostly be 1
-			double addLast = 1 - Math.rint(Math.pow(Math.random(), getOthers()));
-			
-			Rectangle2D.Double battleField = new Rectangle2D.Double(30, 30, getBattleFieldWidth() - 60, getBattleFieldHeight() - 60);
-			
-			
-/*
-			Point2D.Double testPoint;
-			int i=0;
-			do {
-				//	calculate the testPoint somewhere around the current position. 100 + 200*Math.random() proved to be good if there are
-				//	around 10 bots in a 1000x1000 field. but this needs to be limited this to distanceToTarget*0.8. this way the bot wont
-				//	run into the target (should mostly be the closest bot) 
-				testPoint = calcPoint(myPos, Math.min(distanceToTarget*0.8, 100 + 200*Math.random()), 2*Math.PI*Math.random());
-				if(battleField.contains(testPoint) && evaluate(testPoint, addLast) < evaluate(nextDestination, addLast)) {
-					nextDestination = testPoint;
-				}
-			} while(i++ < 200);
-*/
-			nextDestination = new Point2D.Double(target.pos.x + circleRadius*Math.sin(angleCurrent), target.pos.y + circleRadius*Math.cos(angleCurrent));
-			//System.out.println(nextDestination);
-			
-			lastPosition = myPos;
-			
+		double distanceToNextDestination = myPos.distance(nextDestination);
+		System.out.println("mypos: "+myPos.x+","+myPos.y);
+		System.out.println("target: "+target.pos.x+","+target.pos.y);
+		System.out.println("nextDestination: "+nextDestination.x+","+nextDestination.y);
+		System.out.println("distanceToNextDestination: "+distanceToNextDestination);
+
+		if (distanceToNextDestination < 15) {
+			if (random.nextFloat() <= changeDirChance) {
+				angleDelta *= -1;
+			}
+			angleCurrent += angleDelta;
+			double newX = target.pos.x + circleRadius*Math.sin(angleCurrent);
+			double newY = target.pos.y + circleRadius*Math.cos(angleCurrent);
+			nextDestination = new Point2D.Double(Math.max(getWidth(),Math.min(getBattleFieldWidth()-getWidth(),newX)),Math.max(getHeight(),Math.min(getBattleFieldHeight()-getHeight(),newY)));
 		} else {
-			
-		// just the normal goTo stuff
 			double angle = calcAngle(nextDestination, myPos) - getHeadingRadians();
-			System.out.println(nextDestination);
-			System.out.println(myPos);
+			System.out.println("angle: "+Utils.normalRelativeAngle(angle));
 			double direction = 1;
-			
 			if(Math.cos(angle) < 0) {
 				angle += Math.PI;
 				direction = -1;
-			} 
-			
+			}
 			setAhead(distanceToNextDestination * direction);
 			setTurnRightRadians(angle = Utils.normalRelativeAngle(angle));
-			// hitting walls isn't a good idea, but HawkOnFire still does it pretty often
-			setMaxVelocity(Math.abs(angle) > 1 ? 0 : 8d);			
+			setMaxVelocity(Math.abs(angle) > 1 ? 0 : 8d);
 		}
-		
 	}
 	
 //- eval position ---------------------------------------------------------------------------------------------------------------------------
@@ -246,7 +221,7 @@ public class Trollbot_${id} extends AdvancedRobot
 		
 		en.energy = e.getEnergy();
 		en.live = true;
-		en.pos = calcPoint(myPos, e.getDistance(), getHeadingRadians());
+		en.pos = calcPoint(myPos, e.getDistance(), getHeadingRadians() + e.getBearingRadians());
 		en.predictedLocation = calcPoint(myPos, e.getDistance(), getHeadingRadians() + bB);
 		
 		// normal target selection: the one closer to you is the most dangerous so attack him
@@ -271,7 +246,6 @@ public class Trollbot_${id} extends AdvancedRobot
 	private static double calcAngle(Point2D.Double p2,Point2D.Double p1){
 		return Math.atan2(p2.x - p1.x, p2.y - p1.y);
 	}
-	
 //- microEnemy ------------------------------------------------------------------------------------------------------------------------------
 	public class MicroEnemy {
 		public Point2D.Double pos;
