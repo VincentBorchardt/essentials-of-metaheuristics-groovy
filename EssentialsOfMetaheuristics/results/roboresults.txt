@@ -5,4 +5,13 @@ MuPlusLambdaES_2_6	SimpleRobotEvolutionProblem_100	2096	[id:740145, enemy_energy
 ILS-RR	SimpleRobotEvolutionProblem_200	2095	[id:952548, enemy_energy:48.198243498802185, my_energy:48.86483132839203, angle_diff:26.96069061756134, distance:51.618168354034424, movementPerturbation:-0.007468325531449854, out:java.io.PrintWriter@7dac02, score:2095]
 
 Against Sample.TrackFire
-[id:91707466, changeDirChance:0.8133213281631468, circleRadius:103.24150919914246, angleDelta:2.6405566930770874, out:java.io.PrintWriter@468bfb47, score:701]
+[id:51520872, changeDirChance:0.19460798501968385, circleRadius:122.55688309669495, angleDelta:0.5667605400085449, out:java.io.PrintWriter@483ead69, score:224]
+[id:86683983, changeDirChance:0.02162982225418092, circleRadius:125.28172135353088, angleDelta:1.1703959703445435, out:java.io.PrintWriter@5505aa49, score:305]
+[id:94027105, changeDirChance:0.16542428731918335, circleRadius:161.66561245918274, angleDelta:1.6839696168899536, out:java.io.PrintWriter@6dbe7935, score:448]
+[id:42110648, changeDirChance:0.2957264304161072, circleRadius:155.5342137813568, angleDelta:1.1925404071807861, out:java.io.PrintWriter@2e2da07a, score:453]
+[id:28339666, changeDirChance:0.1620766282081604, circleRadius:154.19394373893738, angleDelta:1.8063690662384033, out:java.io.PrintWriter@611fca63, score:539]
+[id:22055459, changeDirChance:0.1263933300971985, circleRadius:126.70156955718994, angleDelta:2.5449020862579346, out:java.io.PrintWriter@2c6061a8, score:614]
+[id:53305468, changeDirChance:0.2989925026893616, circleRadius:88.45289945602417, angleDelta:2.654801368713379, out:java.io.PrintWriter@5e32007f, score:624]
+[id:57665152, changeDirChance:0.14403270483016972, circleRadius:133.5606038570404, angleDelta:2.929507613182068, out:java.io.PrintWriter@11b1db9a, score:641]
+[id:58303459, changeDirChance:0.07733372449874883, circleRadius:94.99568343162537, angleDelta:2.084717273712158, out:java.io.PrintWriter@3a043413, score:684]
+

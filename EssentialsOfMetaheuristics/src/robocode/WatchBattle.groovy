@@ -33,9 +33,9 @@ class WatchBattle {
 		def angle_diff = 79//random.nextFloat() * 100
 		def distance = 68//random.nextFloat() * 100
 		def movementPerturbation = 0 //(2 * random.nextFloat()-1) * Math.PI / 8
-		def circleRadius = 200//100 + random.nextFloat() * 400
-		def angleDelta = 0.5//0.2 + 2 * Math.PI * random.nextFloat()
-		def changeDirChance = 0.1
+		def circleRadius = 95
+		def angleDelta = 2.08
+		def changeDirChance = 0.077
 
 		def values = ["id":id, "enemy_energy":enemy_energy, "my_energy":my_energy, "angle_diff":angle_diff, "distance":distance,
 			"movementPerturbation":movementPerturbation, "circleRadius":circleRadius, "angleDelta":angleDelta, "changeDirChance":changeDirChance]
