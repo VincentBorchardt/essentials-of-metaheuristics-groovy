@@ -32,7 +32,8 @@ class RunBattle {
 		def result = "missing"
 		def pattern
 		if (isWindows) {
-			pattern = ~/evolved\.${robotName}_${id}\*\s+(\d+)/
+			//pattern = ~/evolved\.${robotName}_${id}\*\s+(\d+)/
+			pattern = ~/evolved.HypeMachine_31\s+(\d+)/
 		} else {
 			pattern = ~/evolved\.${robotName}_${id}\s+(\d+)/
 		}

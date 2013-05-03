@@ -18,8 +18,9 @@ class Evolver {
 				for (i in 0 ..< numRuns) {
 					p.evalCount = 0
 					def result = s.maximize(p)
-					def tree = result.get("aimingFunctionTree")
-					println "${s.toString()}\t${p.toString()}\t${p.quality(result)}\n${tree}"
+					//def tree = result.get("aimingFunctionTree")
+					//println "${s.toString()}\t${p.toString()}\t${p.quality(result)}\n${tree}"
+					println "${s.toString()}\t${p.toString()}\t${p.quality(result)}"
 				}
 			}
 		}

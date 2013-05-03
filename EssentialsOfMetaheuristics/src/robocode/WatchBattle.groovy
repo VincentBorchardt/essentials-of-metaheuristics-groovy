@@ -28,17 +28,11 @@ class WatchBattle {
 			battleRunner = new BattleRunner("templates/battle.template", template)
 		}
 		id = random.nextInt(1000000)
-		def enemy_energy = 17//random.nextFloat() * 100
-		def my_energy = 67//random.nextFloat() * 100
-		def angle_diff = 79//random.nextFloat() * 100
-		def distance = 68//random.nextFloat() * 100
-		def movementPerturbation = 0 //(2 * random.nextFloat()-1) * Math.PI / 8
-		def circleRadius = 95
-		def angleDelta = 2.08
-		def changeDirChance = 0.077
+		def changeDirChance = 0.3
+		def optimalDistance = 300
+		def rammingDistance = 80
 
-		def values = ["id":id, "enemy_energy":enemy_energy, "my_energy":my_energy, "angle_diff":angle_diff, "distance":distance,
-			"movementPerturbation":movementPerturbation, "circleRadius":circleRadius, "angleDelta":angleDelta, "changeDirChance":changeDirChance]
+		def values = ["id":id, "changeDirChance":changeDirChance, "optimalDistance":optimalDistance, "rammingDistance":rammingDistance]
 
 		if (isWindows) {
 			robotBuilder = new RobotBuilder("templates\\${template}.template", template)
